@@ -1,2 +1,2 @@
-# slides
+* slides
 slides for presentations
