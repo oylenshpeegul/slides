@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Patterns and Matching</title>
+<meta name="author" content="(Tim Heaney)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../dist/reveal.css"/>
+
+<link rel="stylesheet" href="../dist/theme/night.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Patterns and Matching</h1><h2 class="author">Tim Heaney</h2>
+</section>
+
+<section>
+<section id="slide-org56caff6">
+<h2 id="org56caff6">Agenda</h2>
+<div class="outline-text-2" id="text-org56caff6">
+</div>
+</section>
+<section id="slide-org19a8298">
+<h3 id="org19a8298">18. Patterns and Matching</h3>
+<ul>
+<li>18.0. Review</li>
+<li>18.1. All the Places Patterns Can Be Used</li>
+<li>18.2. Refutability: Whether a Pattern Might Fail to Match</li>
+<li>18.3. Pattern Syntax</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org3e1db94">
+<h2 id="org3e1db94">18.0 Review</h2>
+<div class="outline-text-2" id="text-org3e1db94">
+</div>
+</section>
+<section id="slide-org0bb94ca">
+<h3 id="org0bb94ca">Pattern Matching</h3>
+<ul>
+<li>We saw some already in chapter 6: <a href="https://doc.rust-lang.org/stable/book/ch06-00-enums.html">Enums and Pattern Matching</a></li>
+<li>To imperative programmers, pattern matching might seem weird</li>
+<li>Functional programmers (OCaml, Elixir, F#, <i>&amp;c.</i>) will feel more at home</li>
+
+</ul>
+
+</section>
+<section id="slide-org299abb8">
+<h3 id="org299abb8">Recall chapter 6, <a href="https://doc.rust-lang.org/stable/book/ch06-00-enums.html">Enums and Pattern Matching</a></h3>
+<p>
+<a href="https://doc.rust-lang.org/stable/book/ch06-02-match.html">match</a>
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Coin</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Penny</span>,
+    <span style="color: #6ae4b9;">Nickel</span>,
+    <span style="color: #6ae4b9;">Dime</span>,
+    <span style="color: #6ae4b9;">Quarter</span>,
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">value_in_cents</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">coin</span>: <span style="color: #6ae4b9;">Coin</span><span style="color: #00cd68;">)</span> -&gt; <span style="color: #6ae4b9;">u8</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">match</span> coin <span style="color: #b6a0ff;">{</span>
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Penny</span> =&gt; 1,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Nickel</span> =&gt; 5,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Dime</span> =&gt; 10,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Quarter</span> =&gt; 25,
+    <span style="color: #b6a0ff;">}</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org74ad349">
+<h3 id="org74ad349">Enum with value</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">UsState</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Alabama</span>,
+    <span style="color: #6ae4b9;">Alaska</span>,
+    ..
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Coin</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Penny</span>,
+    <span style="color: #6ae4b9;">Nickel</span>,
+    <span style="color: #6ae4b9;">Dime</span>,
+    <span style="color: #6ae4b9;">Quarter</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">UsState</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orga2735c3">
+<h3 id="orga2735c3">Match and bind to value</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">value_in_cents</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">coin</span>: <span style="color: #6ae4b9;">Coin</span><span style="color: #00cd68;">)</span> -&gt; <span style="color: #6ae4b9;">u8</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">match</span> coin <span style="color: #b6a0ff;">{</span>
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Penny</span> =&gt; 1,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Nickel</span> =&gt; 5,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Dime</span> =&gt; 10,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Quarter</span><span style="color: #6ae4b9;">(</span>state<span style="color: #6ae4b9;">)</span> =&gt; <span style="color: #6ae4b9;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #f0ce43;">(</span><span style="color: #79a8ff;">"State quarter from </span><span style="color: #79a8ff; font-style: italic;">{:?}</span><span style="color: #79a8ff;">!"</span>, state<span style="color: #f0ce43;">)</span>;
+            25
+        <span style="color: #6ae4b9;">}</span>
+    <span style="color: #b6a0ff;">}</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgd7cc79b">
+<h3 id="orgd7cc79b">regular quarter</h3>
+
+<div id="orgd47fa3c" class="figure">
+<p><img src="./regular-quarter.jpg" alt="regular-quarter.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orge7b1362">
+<h3 id="orge7b1362">state quarter</h3>
+
+<div id="org4084ace" class="figure">
+<p><img src="./north-dakota-quarter.jpg" alt="north-dakota-quarter.jpg" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-org4100a04">
+<h3 id="org4100a04">But we still have regular quarters&#x2026;</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Coin</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Penny</span>,
+    <span style="color: #6ae4b9;">Nickel</span>,
+    <span style="color: #6ae4b9;">Dime</span>,
+    <span style="color: #6ae4b9;">Quarter</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">Option</span><span style="color: #6ae4b9;">&lt;</span><span style="color: #6ae4b9;">UsState</span><span style="color: #6ae4b9;">&gt;</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orga94faec">
+<h3 id="orga94faec">bicentennial quarter</h3>
+
+<div id="orga11ac2e" class="figure">
+<p><img src="./bicentennial-quarter.jpg" alt="bicentennial-quarter.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgf086052">
+<h3 id="orgf086052">model American change</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Series</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Regular</span>,
+    <span style="color: #6ae4b9;">Bicentennial</span>,
+    <span style="color: #6ae4b9;">UsStates</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">UsState</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">UsTerritories</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">UsTerritory</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">AmericaTheBeautiful</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">NationalPark</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">AmericanWomen</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">Woman</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Coin</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Penny</span>,
+    <span style="color: #6ae4b9;">Nickel</span>,
+    <span style="color: #6ae4b9;">Dime</span>,
+    <span style="color: #6ae4b9;">Quarter</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">Series</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org8ea9c72">
+<h3 id="org8ea9c72">Match an <code>Option</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">plus_one</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">x</span>: <span style="color: #6ae4b9;">Option</span><span style="color: #b6a0ff;">&lt;</span><span style="color: #6ae4b9;">i32</span><span style="color: #b6a0ff;">&gt;</span><span style="color: #00cd68;">)</span> -&gt; <span style="color: #6ae4b9;">Option</span><span style="color: #00cd68;">&lt;</span><span style="color: #6ae4b9;">i32</span><span style="color: #00cd68;">&gt;</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">match</span> x <span style="color: #b6a0ff;">{</span>
+        <span style="color: #6ae4b9;">None</span> =&gt; <span style="color: #6ae4b9;">None</span>,
+        <span style="color: #6ae4b9;">Some</span><span style="color: #6ae4b9;">(</span>i<span style="color: #6ae4b9;">)</span> =&gt; <span style="color: #6ae4b9;">Some</span><span style="color: #6ae4b9;">(</span>i + 1<span style="color: #6ae4b9;">)</span>,
+    <span style="color: #b6a0ff;">}</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org8d100a0">
+<h3 id="org8d100a0">Match with <code>if let</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">plus_one</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">x</span>: <span style="color: #6ae4b9;">Option</span><span style="color: #b6a0ff;">&lt;</span><span style="color: #6ae4b9;">i32</span><span style="color: #b6a0ff;">&gt;</span><span style="color: #00cd68;">)</span> -&gt; <span style="color: #6ae4b9;">Option</span><span style="color: #00cd68;">&lt;</span><span style="color: #6ae4b9;">i32</span><span style="color: #00cd68;">&gt;</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #b6a0ff;">(</span>i<span style="color: #b6a0ff;">)</span> = x <span style="color: #b6a0ff;">{</span>
+        <span style="color: #b6a0ff;">return</span> <span style="color: #6ae4b9;">Some</span><span style="color: #6ae4b9;">(</span>i + 1<span style="color: #6ae4b9;">)</span>;
+    <span style="color: #b6a0ff;">}</span>
+    <span style="color: #6ae4b9;">None</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1d16e30">
+<h2 id="org1d16e30">18.1 <a href="https://doc.rust-lang.org/stable/book/ch18-01-all-the-places-for-patterns.html">All the Places Patterns Can Be Used</a></h2>
+<div class="outline-text-2" id="text-org1d16e30">
+</div>
+</section>
+<section id="slide-orgdb66ce5">
+<h3 id="orgdb66ce5"><code>match</code> arms</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">match</span> <span style="color: #6ae4b9;">VALUE</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">PATTERN</span> =&gt; <span style="color: #6ae4b9;">EXPRESSION</span>,
+    <span style="color: #6ae4b9;">PATTERN</span> =&gt; <span style="color: #6ae4b9;">EXPRESSION</span>,
+    <span style="color: #6ae4b9;">PATTERN</span> =&gt; <span style="color: #6ae4b9;">EXPRESSION</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org09fad9c">
+<h3 id="org09fad9c">conditional <code>if let</code> expressions</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">PATTERN</span> = <span style="color: #6ae4b9;">VALUE</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org0b5e9c9">
+<h3 id="org0b5e9c9">Note: <code>if let</code> is not exhaustive, but can have an <code>else</code> clause</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">PATTERN</span> = <span style="color: #6ae4b9;">VALUE</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span> <span style="color: #b6a0ff;">else</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org4c6aa2f">
+<h3 id="org4c6aa2f"><code>while let</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">while</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">PATTERN</span> = <span style="color: #6ae4b9;">VALUE</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org151a004">
+<h3 id="org151a004">While let example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">while</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>top<span style="color: #00cd68;">)</span> = stack.pop<span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{top}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+<p>
+When the match fails, the loop ends.
+</p>
+
+</section>
+<section id="slide-orgb5d8941">
+<h3 id="orgb5d8941"><code>for</code> loops</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">for</span> <span style="color: #6ae4b9;">PATTERN</span> <span style="color: #b6a0ff;">in</span> <span style="color: #6ae4b9;">ITERATOR</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org775e11e">
+<h3 id="org775e11e">For loop example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">v</span> = <span style="color: #ff9977;">vec!</span><span style="color: #00cd68;">[</span><span style="color: #79a8ff;">'a'</span>, <span style="color: #79a8ff;">'b'</span>, <span style="color: #79a8ff;">'c'</span><span style="color: #00cd68;">]</span>;
+
+<span style="color: #b6a0ff;">for</span> <span style="color: #00cd68;">(</span>index, value<span style="color: #00cd68;">)</span> <span style="color: #b6a0ff;">in</span> v.iter<span style="color: #00cd68;">()</span>.enumerate<span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{value}</span><span style="color: #79a8ff;"> is at index </span><span style="color: #79a8ff; font-style: italic;">{index}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org7d03f16">
+<h3 id="org7d03f16"><code>let</code> statements</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">PATTERN</span> = <span style="color: #6ae4b9;">VALUE</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org373b53c">
+<h3 id="org373b53c">Let statement example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>x, y, z<span style="color: #00cd68;">)</span> = t;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"x: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, y: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">, z: </span><span style="color: #79a8ff; font-style: italic;">{z}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org8c1890e">
+<h3 id="org8c1890e">Error if it doesn't match</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>x, y<span style="color: #00cd68;">)</span> = t;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"x: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, y: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org83f1b43">
+<h3 id="org83f1b43">Compilation error, of course</h3>
+<pre  class="example" >
+❯ cargo run
+   Compiling pattern-matching v0.1.0 (/home/tim/rust/pattern-matching)
+error[E0308]: mismatched types
+  --&gt; src/main.rs:19:9
+   |
+19 |     let (x, y) = t;
+   |         ^^^^^^   - this expression has type `({integer}, {integer}, {integer})`
+   |         |
+   |         expected a tuple with 3 elements, found one with 2 elements
+   |
+   = note: expected tuple `({integer}, {integer}, {integer})`
+              found tuple `(_, _)`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `pattern-matching` due to previous error
+</pre>
+
+
+</section>
+<section id="slide-org43dcbb4">
+<h3 id="org43dcbb4">Assign to underscore so match succeeds</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>x, y, _<span style="color: #00cd68;">)</span> = t;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"x: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, y: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgfe387c9">
+<h3 id="orgfe387c9">Function parameters</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">name</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">PATTERN</span>: <span style="color: #6ae4b9;">TYPE</span><span style="color: #00cd68;">)</span> <span style="color: #00cd68;">{</span>
+    ...
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgd489240">
+<h3 id="orgd489240">Function parameters example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">print_coordinates</span><span style="color: #00cd68;">(</span><span style="color: #ffffff; background-color: #000000;">&amp;</span><span style="color: #b6a0ff;">(</span>x, y<span style="color: #b6a0ff;">)</span>: <span style="color: #ffffff; background-color: #000000;">&amp;</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">i32</span>, <span style="color: #6ae4b9;">i32</span><span style="color: #b6a0ff;">)</span><span style="color: #00cd68;">)</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Current location: (</span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">)"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">point</span> = <span style="color: #b6a0ff;">(</span>3, 5<span style="color: #b6a0ff;">)</span>;
+    print_coordinates<span style="color: #b6a0ff;">(</span><span style="color: #ffffff; background-color: #000000;">&amp;</span>point<span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org26c47c9">
+<h3 id="org26c47c9">Closures</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">print_coordinates</span> = |<span style="color: #ffffff; background-color: #000000;">&amp;</span><span style="color: #00cd68;">(</span>x, y<span style="color: #00cd68;">)</span>:  <span style="color: #ffffff; background-color: #000000;">&amp;</span><span style="color: #00cd68;">(</span><span style="color: #6ae4b9;">i32</span>, <span style="color: #6ae4b9;">i32</span><span style="color: #00cd68;">)</span>| <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Current location: (</span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">)"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org72424e4">
+<h3 id="org72424e4">Assignments</h3>
+<p>
+As of <a href="https://blog.rust-lang.org/2022/02/24/Rust-1.59.0.html#destructuring-assignments">Rust 1.59</a>, we can use tuple, slice, and struct patterns as the left-hand side of an assignment.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>a, b, c, d, e<span style="color: #00cd68;">)</span>;
+
+<span style="color: #00cd68;">(</span>a, b<span style="color: #00cd68;">)</span> = <span style="color: #00cd68;">(</span>1, 2<span style="color: #00cd68;">)</span>;
+<span style="color: #00cd68;">[</span>c, .., d, _<span style="color: #00cd68;">]</span> = <span style="color: #00cd68;">[</span>1, 2, 3, 4, 5<span style="color: #00cd68;">]</span>;
+<span style="color: #6ae4b9;">Struct</span> <span style="color: #00cd68;">{</span> e, .. <span style="color: #00cd68;">}</span> = <span style="color: #6ae4b9;">Struct</span> <span style="color: #00cd68;">{</span> <span style="color: #00d3d0;">e</span>: 5, <span style="color: #00d3d0;">f</span>: 3 <span style="color: #00cd68;">}</span>;
+
+<span style="color: #ff9977;">assert_eq!</span><span style="color: #00cd68;">(</span><span style="color: #b6a0ff;">[</span>1, 2, 1, 4, 5<span style="color: #b6a0ff;">]</span>, <span style="color: #b6a0ff;">[</span>a, b, c, d, e<span style="color: #b6a0ff;">]</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org821dc27">
+<h2 id="org821dc27">18.2 <a href="https://doc.rust-lang.org/stable/book/ch18-02-refutability.html">Refutability: Whether a Pattern Might Fail to Match</a></h2>
+<div class="outline-text-2" id="text-org821dc27">
+</div>
+</section>
+<section id="slide-org2aa35b8">
+<h3 id="org2aa35b8">Patterns come in two forms</h3>
+<ul>
+<li>irrefutable</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = 5;
+</code></pre>
+</div>
+
+<ul>
+<li>refutable</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>x<span style="color: #00cd68;">)</span> = y <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org9589c0c">
+<h3 id="org9589c0c">Irrefutable</h3>
+<ul>
+<li>Function parameters</li>
+<li>Let statements</li>
+<li>For loops</li>
+
+</ul>
+
+</section>
+<section id="slide-org9b46925">
+<h3 id="org9b46925">Meant to be refutable</h3>
+<ul>
+<li>if let</li>
+<li>while let</li>
+
+</ul>
+
+</section>
+<section id="slide-orgc7491e7">
+<h3 id="orgc7491e7">Improperly using a refutable pattern is an <i>error</i></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>x<span style="color: #00cd68;">)</span> = y;
+</code></pre>
+</div>
+
+<pre  class="example" >
+error[E0005]: refutable pattern in local binding: `None` not covered
+   --&gt; src/main.rs:41:9
+    |
+41  |     let Some(x) = y;
+    |         ^^^^^^^ pattern `None` not covered
+    |
+...
+</pre>
+
+
+</section>
+<section id="slide-org0cc289a">
+<h3 id="org0cc289a">Improperly using an irrefutable pattern is a <i>warning</i></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = 5 <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+<pre  class="example" >
+warning: irrefutable `if let` pattern
+  --&gt; src/main.rs:37:8
+   |
+37 |     if let x = 5 {
+   |        ^^^^^^^^^
+   |
+...
+</pre>
+
+</section>
+<section id="slide-org5076326">
+<h3 id="org5076326">Match arms</h3>
+<ul>
+<li>each arm must use a refutable pattern</li>
+<li>except last arm, which is irrefutable</li>
+<li>(last arm matches everything else)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org338538b">
+<h2 id="org338538b">18.3 <a href="https://doc.rust-lang.org/stable/book/ch18-03-pattern-syntax.html">Pattern Syntax</a></h2>
+<div class="outline-text-2" id="text-org338538b">
+</div>
+</section>
+<section id="slide-org74c4ba5">
+<h3 id="org74c4ba5">matching literals</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = 1;
+
+<span style="color: #b6a0ff;">match</span> x <span style="color: #00cd68;">{</span>
+    1 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"one"</span><span style="color: #b6a0ff;">)</span>,
+    2 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"two"</span><span style="color: #b6a0ff;">)</span>,
+    3 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"three"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"anything"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org268629f">
+<h3 id="org268629f">matching named variables</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>5<span style="color: #00cd68;">)</span>;
+<span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">y</span> = 10;
+
+<span style="color: #b6a0ff;">match</span> x <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Some</span><span style="color: #b6a0ff;">(</span>50<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Got 50"</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">Some</span><span style="color: #b6a0ff;">(</span>y<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Matched, y = </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Default case, x = </span><span style="color: #79a8ff; font-style: italic;">{x:?}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"at the end: x = </span><span style="color: #79a8ff; font-style: italic;">{x:?}</span><span style="color: #79a8ff;">, y = </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org52d34d1">
+<h3 id="org52d34d1">matching multiple patterns</h3>
+<p>
+use  | for <i>or</i>
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = 1;
+
+<span style="color: #b6a0ff;">match</span> x <span style="color: #00cd68;">{</span>
+    1 | 2 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"one or two"</span><span style="color: #b6a0ff;">)</span>,
+    3 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"three"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"anything"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgc564a67">
+<h3 id="orgc564a67">matching ranges</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = 5;
+
+<span style="color: #b6a0ff;">match</span> x <span style="color: #00cd68;">{</span>
+    1..=5 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"one through five"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"something else"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+<p>
+Nicer than <code>1 | 2 | 3 | 4 | 5</code>
+</p>
+
+</section>
+<section id="slide-org62b7d36">
+<h3 id="org62b7d36">ranges with characters</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">x</span> = <span style="color: #79a8ff;">'c'</span>;
+
+<span style="color: #b6a0ff;">match</span> x <span style="color: #00cd68;">{</span>
+    <span style="color: #79a8ff;">'a'</span>..=<span style="color: #79a8ff;">'j'</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"early ASCII letter"</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #79a8ff;">'k'</span>..=<span style="color: #79a8ff;">'z'</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"late ASCII letter"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"something else"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+<ul>
+<li>Ranges are only allowed with numeric values or <code>char</code> values</li>
+
+</ul>
+
+</section>
+<section id="slide-orgb6f10c7">
+<h3 id="orgb6f10c7">Destructuring</h3>
+<ul>
+<li>structs</li>
+<li>enums</li>
+<li>tuples</li>
+<li>references</li>
+
+</ul>
+
+</section>
+<section id="slide-orgcc3bcb0">
+<h3 id="orgcc3bcb0">Destructuring structs</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">Point</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #00d3d0;">x</span>: <span style="color: #6ae4b9;">i32</span>,
+    <span style="color: #00d3d0;">y</span>: <span style="color: #6ae4b9;">i32</span>,
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">p</span> = <span style="color: #6ae4b9;">Point</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">x</span>: 0, <span style="color: #00d3d0;">y</span>: 7 <span style="color: #b6a0ff;">}</span>;
+
+    <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Point</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">x</span>: a, <span style="color: #00d3d0;">y</span>: b <span style="color: #b6a0ff;">}</span> = p;
+    <span style="color: #ff9977;">assert_eq!</span><span style="color: #b6a0ff;">(</span>0, a<span style="color: #b6a0ff;">)</span>;
+    <span style="color: #ff9977;">assert_eq!</span><span style="color: #b6a0ff;">(</span>7, b<span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org8871f18">
+<h3 id="org8871f18">Shorthand</h3>
+<ul>
+<li>When the variable names match the field names, we don't have to write the field names</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">Point</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #00d3d0;">x</span>: <span style="color: #6ae4b9;">i32</span>,
+    <span style="color: #00d3d0;">y</span>: <span style="color: #6ae4b9;">i32</span>,
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">p</span> = <span style="color: #6ae4b9;">Point</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">x</span>: 0, <span style="color: #00d3d0;">y</span>: 7 <span style="color: #b6a0ff;">}</span>;
+
+    <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Point</span> <span style="color: #b6a0ff;">{</span> x, y <span style="color: #b6a0ff;">}</span> = p;
+    <span style="color: #ff9977;">assert_eq!</span><span style="color: #b6a0ff;">(</span>0, x<span style="color: #b6a0ff;">)</span>;
+    <span style="color: #ff9977;">assert_eq!</span><span style="color: #b6a0ff;">(</span>7, y<span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgd18e3aa">
+<h3 id="orgd18e3aa">Destructuring enums</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Message</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Quit</span>,
+    <span style="color: #6ae4b9;">Move</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">x</span>: <span style="color: #6ae4b9;">i32</span>, <span style="color: #00d3d0;">y</span>: <span style="color: #6ae4b9;">i32</span> <span style="color: #b6a0ff;">}</span>,
+    <span style="color: #6ae4b9;">Write</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">String</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">ChangeColor</span><span style="color: #b6a0ff;">(</span><span style="color: #6ae4b9;">i32</span>, <span style="color: #6ae4b9;">i32</span>, <span style="color: #6ae4b9;">i32</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgdbc1018">
+<h3 id="orgdbc1018">Destructuring enums 2</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">msg</span> = <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">ChangeColor</span><span style="color: #b6a0ff;">(</span>0, 160, 255<span style="color: #b6a0ff;">)</span>;
+...
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org8f44a13">
+<h3 id="org8f44a13">Destructuring enums 3</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim>    <span style="color: #b6a0ff;">match</span> msg <span style="color: #00cd68;">{</span>
+        <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Quit</span> =&gt; <span style="color: #b6a0ff;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"No data to destructure."</span><span style="color: #6ae4b9;">)</span>
+        <span style="color: #b6a0ff;">}</span>
+        <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Move</span> <span style="color: #b6a0ff;">{</span> x, y <span style="color: #b6a0ff;">}</span> =&gt; <span style="color: #b6a0ff;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"Move x </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;"> and y </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #6ae4b9;">)</span>
+        <span style="color: #b6a0ff;">}</span>
+        <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Write</span><span style="color: #b6a0ff;">(</span>text<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #b6a0ff;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"Text message: </span><span style="color: #79a8ff; font-style: italic;">{text}</span><span style="color: #79a8ff;">"</span><span style="color: #6ae4b9;">)</span>
+        <span style="color: #b6a0ff;">}</span>
+        <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">ChangeColor</span><span style="color: #b6a0ff;">(</span>r, g, b<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #b6a0ff;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"red </span><span style="color: #79a8ff; font-style: italic;">{r}</span><span style="color: #79a8ff;">, green </span><span style="color: #79a8ff; font-style: italic;">{g}</span><span style="color: #79a8ff;">, and blue </span><span style="color: #79a8ff; font-style: italic;">{b}</span><span style="color: #79a8ff;">"</span><span style="color: #6ae4b9;">)</span>
+        <span style="color: #b6a0ff;">}</span>
+    <span style="color: #00cd68;">}</span>
+<span style="color: #ff8059; font-weight: bold;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgef8bdbd">
+<h3 id="orgef8bdbd">Destructuting nested structs and enums</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">value_in_cents</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">coin</span>: <span style="color: #6ae4b9;">Coin</span><span style="color: #00cd68;">)</span> -&gt; <span style="color: #6ae4b9;">u8</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">match</span> coin <span style="color: #b6a0ff;">{</span>
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Penny</span> =&gt; 1,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Nickel</span> =&gt; 5,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Dime</span> =&gt; 10,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Quarter</span><span style="color: #6ae4b9;">(</span><span style="color: #6ae4b9;">Series</span>::<span style="color: #6ae4b9;">UsStates</span><span style="color: #f0ce43;">(</span>state<span style="color: #f0ce43;">)</span><span style="color: #6ae4b9;">)</span> =&gt; <span style="color: #6ae4b9;">{</span>
+            <span style="color: #f78fe7;">println!</span><span style="color: #f0ce43;">(</span><span style="color: #79a8ff;">"State quarter from </span><span style="color: #79a8ff; font-style: italic;">{:?}</span><span style="color: #79a8ff;">!"</span>, state<span style="color: #f0ce43;">)</span>;
+            25
+        <span style="color: #6ae4b9;">}</span>,
+        <span style="color: #6ae4b9;">Coin</span>::<span style="color: #6ae4b9;">Quarter</span><span style="color: #6ae4b9;">(</span>_<span style="color: #6ae4b9;">)</span> =&gt; 25,
+    <span style="color: #b6a0ff;">}</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgd1079a2">
+<h3 id="orgd1079a2">Destructuring tuples</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>x, y, z<span style="color: #00cd68;">)</span> = t;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"x: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">, y: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">, z: </span><span style="color: #79a8ff; font-style: italic;">{z}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org7018f6a">
+<h3 id="org7018f6a">Destructuring references</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">reference</span> = <span style="color: #ffffff; background-color: #000000;">&amp;</span>3;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #ffffff; background-color: #000000;">&amp;</span>value = reference;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"value: </span><span style="color: #79a8ff; font-style: italic;">{value}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org6d02f8a">
+<h3 id="org6d02f8a">Same as this</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">reference</span> = <span style="color: #ffffff; background-color: #000000;">&amp;</span>3;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">value</span> = *reference;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"value: </span><span style="color: #79a8ff; font-style: italic;">{value}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org3dd581b">
+<h3 id="org3dd581b">Ignoring values in a pattern</h3>
+<ul>
+<li>Ignoring an entire value with underscore _</li>
+<li>Ignoring parts of a value with a nested _</li>
+<li>Ignoring an unused variable by starting its name with _</li>
+<li>Ignoring remaining parts of a value with ..</li>
+
+</ul>
+
+
+</section>
+<section id="slide-org48397ee">
+<h3 id="org48397ee">Ignoring an entire value with underscore _</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">foo</span><span style="color: #00cd68;">(</span><span style="color: #00d3d0;">_</span>: <span style="color: #6ae4b9;">i32</span>, <span style="color: #00d3d0;">y</span>: <span style="color: #6ae4b9;">i32</span><span style="color: #00cd68;">)</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"y parameter: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+
+</section>
+<section id="slide-org54ccc8f">
+<h3 id="org54ccc8f">Ignoring parts of a value with a nested _</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">match</span> t <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">(</span>1, y, _<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"x: 1, y: </span><span style="color: #79a8ff; font-style: italic;">{y}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>,
+    _ =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"no match"</span><span style="color: #b6a0ff;">)</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org2fbc684">
+<h3 id="org2fbc684">Ignoring an unused variable by starting its name with _</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #00cd68;">()</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">_x</span> = 5; <span style="color: #a8a8a8;">// </span><span style="color: #a8a8a8;">no unused warning</span>
+    <span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">y</span> = 10; <span style="color: #a8a8a8;">// </span><span style="color: #a8a8a8;">unused variable warning</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orge54198f">
+<h3 id="orge54198f">But it still binds the variable!</h3>
+<p>
+This won't compile (<code>s</code> is moved into <code>_s</code>)
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">s</span> = <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span><span style="color: #6ae4b9;">String</span>::from<span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Hello!"</span><span style="color: #b6a0ff;">)</span><span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>_s<span style="color: #00cd68;">)</span> = s <span style="color: #00cd68;">{</span> 
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"found a string"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{:?}</span><span style="color: #79a8ff;">"</span>, s<span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orga2baa1e">
+<h3 id="orga2baa1e">Underscore does not bind</h3>
+<p>
+This works fine!
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">s</span> = <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span><span style="color: #6ae4b9;">String</span>::from<span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Hello!"</span><span style="color: #b6a0ff;">)</span><span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">let</span> <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>_<span style="color: #00cd68;">)</span> = s <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"found a string"</span><span style="color: #b6a0ff;">)</span>;
+<span style="color: #00cd68;">}</span>
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{:?}</span><span style="color: #79a8ff;">"</span>, s<span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+
+</section>
+<section id="slide-orgce8c066">
+<h3 id="orgce8c066">Ignoring remaining parts of a value with ..</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">t</span> = <span style="color: #00cd68;">(</span>1, 2, 3<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">let</span> <span style="color: #00cd68;">(</span>x, ..<span style="color: #00cd68;">)</span> = t;
+
+<span style="color: #f78fe7;">println!</span><span style="color: #00cd68;">(</span><span style="color: #79a8ff;">"x: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">"</span><span style="color: #00cd68;">)</span>;
+</code></pre>
+</div>
+
+
+</section>
+<section id="slide-orgc06b318">
+<h3 id="orgc06b318">Match Guards</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">num</span> = <span style="color: #6ae4b9;">Some</span><span style="color: #00cd68;">(</span>4<span style="color: #00cd68;">)</span>;
+
+<span style="color: #b6a0ff;">match</span> num <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Some</span><span style="color: #b6a0ff;">(</span>x<span style="color: #b6a0ff;">)</span> <span style="color: #b6a0ff;">if</span> x &lt; 5 =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"less than five: </span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">Some</span><span style="color: #b6a0ff;">(</span>x<span style="color: #b6a0ff;">)</span> =&gt; <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-style: italic;">{x}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>,
+    <span style="color: #6ae4b9;">None</span> =&gt; <span style="color: #b6a0ff;">()</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org14c5dbc">
+<h3 id="org14c5dbc">@ Bindings</h3>
+<p>
+If we have this enum defined&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">enum</span> <span style="color: #6ae4b9;">Message</span> <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Hello</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">id</span>: <span style="color: #6ae4b9;">i32</span> <span style="color: #b6a0ff;">}</span>,
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orga980644">
+<h3 id="orga980644">&#x2026;then this will print</h3>
+<p>
+"Found an id in range: 5"
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">msg</span> = <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #00cd68;">{</span> <span style="color: #00d3d0;">id</span>: 5 <span style="color: #00cd68;">}</span>;
+
+<span style="color: #b6a0ff;">match</span> msg <span style="color: #00cd68;">{</span>
+    <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">id</span>: id_value @ 3..=7 <span style="color: #b6a0ff;">}</span> =&gt; <span style="color: #b6a0ff;">{</span>
+        <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"Found an id in range: </span><span style="color: #79a8ff; font-style: italic;">{id_value}</span><span style="color: #79a8ff;">"</span><span style="color: #6ae4b9;">)</span>
+    <span style="color: #b6a0ff;">}</span>,
+    <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #b6a0ff;">{</span> <span style="color: #00d3d0;">id</span>: 10..=12 <span style="color: #b6a0ff;">}</span> =&gt; <span style="color: #b6a0ff;">{</span>
+        <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"Found an id in another range"</span><span style="color: #6ae4b9;">)</span>
+    <span style="color: #b6a0ff;">}</span>
+    <span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #b6a0ff;">{</span> id <span style="color: #b6a0ff;">}</span> =&gt; <span style="color: #b6a0ff;">{</span>
+        <span style="color: #f78fe7;">println!</span><span style="color: #6ae4b9;">(</span><span style="color: #79a8ff;">"Found some other id: </span><span style="color: #79a8ff; font-style: italic;">{id}</span><span style="color: #79a8ff;">"</span><span style="color: #6ae4b9;">)</span>
+    <span style="color: #b6a0ff;">}</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgdefe272">
+<h3 id="orgdefe272">That last one</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #00cd68;">{</span> id <span style="color: #00cd68;">}</span> =&gt; <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Found some other id: </span><span style="color: #79a8ff; font-style: italic;">{id}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+<p>
+is short-hand for
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #6ae4b9;">Message</span>::<span style="color: #6ae4b9;">Hello</span> <span style="color: #00cd68;">{</span> <span style="color: #00d3d0;">id</span>: id <span style="color: #00cd68;">}</span> =&gt; <span style="color: #00cd68;">{</span>
+    <span style="color: #f78fe7;">println!</span><span style="color: #b6a0ff;">(</span><span style="color: #79a8ff;">"Found some other id: </span><span style="color: #79a8ff; font-style: italic;">{id}</span><span style="color: #79a8ff;">"</span><span style="color: #b6a0ff;">)</span>
+<span style="color: #00cd68;">}</span>
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgff4774a">
+<h2 id="orgff4774a">More</h2>
+<ul>
+<li>The Rust Reference
+<ul>
+<li><a href="https://doc.rust-lang.org/reference/expressions/match-expr.html">Match expressions</a></li>
+<li><a href="https://doc.rust-lang.org/reference/patterns.html">Patterns</a></li>
+
+</ul></li>
+<li>Rust By Example
+<ul>
+<li><a href="https://doc.rust-lang.org/rust-by-example/flow_control/match.html">match</a></li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html">if let</a></li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html">while let</a></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org26e836c">
+<h2 id="org26e836c">Thanks!</h2>
+
+<div id="orgd150d16" class="figure">
+<p><img src="./tim.jpg" alt="tim.jpg" />
+</p>
+</div>
+<ul>
+<li><a href="https://twitter.com/oylenshpeegul">@oylenshpeegul</a></li>
+<li>oylenshpeegul@pm.me</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/zoom/zoom.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes]
+});
+
+</script>
+</body>
+</html>
