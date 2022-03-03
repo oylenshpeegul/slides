@@ -1,2 +1,4 @@
 * slides
 slides for presentations
+- [[https://oylenshpeegul.github.io/slides/pattern-matching/][Pattern Matching]], 2022-03-03, Rust and C++ Cardiff - Rust Book Study Session
+  
