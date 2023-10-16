@@ -1,4 +1,4 @@
 * slides
 slides for presentations
 - [[https://oylenshpeegul.github.io/slides/pattern-matching/][Pattern Matching]], 2022-03-03, Rust and C++ Cardiff - [[https://www.meetup.com/rust-and-c-plus-plus-in-cardiff/events/284196124][Rust Book Study Session]]
-  
+- [[https://oylenshpeegul.github.io/slides/rust-atomics-and-locks-10][Chapter 10: Ideas and Inspiration]], 2023-11-29, Rust and C++ Cardiff - Rust Atomics and Locks book club  
