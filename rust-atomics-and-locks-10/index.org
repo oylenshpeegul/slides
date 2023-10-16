@@ -1,0 +1,255 @@
+#+OPTIONS: num:nil toc:nil
+#+OPTIONS: timestamp:nil
+#+REVEAL_THEME: simple
+#+REVEAL_EXTRA_CSS: ./style.css
+#+Title: Rust Atomics and Locks 10
+#+Author: Tim Heaney
+#+Email: oylenshpeegul@proton.me
+
+* [[https://marabos.nl/atomics/inspiration.html][Chapter 10. Ideas and Inspiration]]
+- [[https://marabos.nl/atomics/inspiration.html#semaphore][Semaphore]]
+- [[https://marabos.nl/atomics/inspiration.html#rcu][RCU]]
+- [[https://marabos.nl/atomics/inspiration.html#lock-free-linked-list][Lock-free Linked List]]
+- [[https://marabos.nl/atomics/inspiration.html#queue-based-locks][Queue-based Locks]]
+- [[https://marabos.nl/atomics/inspiration.html#parking-lotbased-locks][Parking-lot Based Locks]]
+- [[https://marabos.nl/atomics/inspiration.html#sequence-lock][Sequence Lock]]
+  
+* Semaphore
+** [[./semaphore.jpg]]
+**  effectively just a counter with two operations
+ - /signal/ (also called /up/ or V)
+ - /wait/ (also called /down/ or P)
+** [[./raal_10in01.png]]
+** Edsger W. Dijkstra
+- [[https://www.cs.utexas.edu/users/EWD/ewd00xx/EWD35.PDF][EWD35]] (1962 or 3)
+- /Seinpalen/ (semaphores)
+- V => /Vrijgave/ (release)
+- P => /Passering/ (pass)
+** [[./dijkstra.png]]
+** Semaphore can be implemented as
+- a ~Mutex<u32>~ for the counter
+- a ~Condvar~ for wait operations to wait for
+** More efficient with futex operations  
+- [[https://marabos.nl/atomics/os-primitives.html#futex][Futex]] in chapter 8
+** Binary semaphore
+- maximum value of one
+- build other things with it
+** [[./binary-semaphore.png]]
+** Binary semaphore as mutex
+- initialize counter to one
+- wait operation for locking
+- signal operation for unlocking
+** Binary semaphore for signaling
+- initialize counter to zero
+- wait operation for ~park~
+- signal operation for ~unpark~
+** [[./semaphore.jpg]]
+** :)
+#+BEGIN_QUOTE
+Note how a mutex can be implemented using a semaphore, while a semaphore can be implemented using a mutex (and a condition variable). It’s advisable to avoid using a mutex-based semaphore to implement a semaphore-based mutex, and the other way around.
+#+END_QUOTE
+** Further reading
+- [[https://en.wikipedia.org/wiki/Semaphore_(programming)][semaphore]] (wp)
+- [[https://see.stanford.edu/materials/icsppcs107/23-Concurrency-Examples.pdf][Thread and Semaphore Examples]] (course notes, 2008)
+
+* RCU
+** RCU => read, copy, update
+** [[./raal_10in02.png]]
+** read, copy, modify, update, deallocate (RCMUD?)
+** [[./rcu0.png]]
+** [[./rcu1.png]]
+** [[./rcu2.png]]
+** [[./rcu3.png]]
+** [[./rcu3b.png]]
+** [[./rcu4.png]]
+** [[./rcu5.png]]
+** De-allocating the old data
+- some readers still have old data
+- cannot delete until they're done
+** Possible solutions
+- ignoring (leak memory)
+- reference counting
+- garbage collection
+- hazard pointers
+- quiescent state tracking
+** RCU => Linux kernel 2.5 (2002)
+** RCU
+- read, copy, update
+- read-copy update
+** Fedor G. Pikus
+- [[https://www.youtube.com/watch?v=rxQ5K9lo034][Read, Copy, Update, then what?]]
+- CppCon 2017
+** [[./when-to-use-rcu.png]]
+** Other names for similar techniques
+- /passive serialization/
+- /MP defer/
+- /generations/
+** [[https://patentimages.storage.googleapis.com/7f/e5/00/2a6e3d59478597/US4809168.pdf][PASSIVE SERIALIZATION IN A MULTITASKING ENVIRONMENT]]
+** Rust RCU crates
+- [[https://docs.rs/arc-swap/latest/arc_swap/struct.ArcSwapAny.html#method.rcu][ArcSwapAny]]
+- [[https://docs.rs/rcu_cell/latest/rcu_cell/][rcu cell]]
+- [[https://docs.rs/rcu-clean/latest/rcu_clean/][rcu clean]]
+- [[https://docs.rs/crossbeam-epoch/latest/crossbeam_epoch/][crossbeam epoch]]
+** Further reading
+- [[https://en.wikipedia.org/wiki/Read-copy-update][Read-copy-update]] (wp)
+- [[https://lwn.net/Articles/262464/][What is RCU, Fundamentally?]] (2007)
+
+* Lock-Free Linked List
+** extension of RCU
+- add an atomic pointer to the struct
+- point to the next one
+- viola, a linked list!
+** insert
+- allocate new element
+- point its pointer at the first element in the list
+- atomically update the initial pointer to point to your newly allocated element
+** [[./raal_10in03.png]]
+** delete
+- atomically update the pointer before it to point to the element after it
+** multiple writers
+- care must be taken to handle concurrent insertion or removal operations on neighboring elements
+- Otherwise, you might accidentally also remove a concurrently newly inserted element, or undo the removal of a concurrently removed element
+** To keep things simple
+- use a regular mutex to avoid concurrent mutations
+- reading is still a lock-free operation
+- you don’t have to worry about handling concurrent mutation
+** RCU
+- After detaching an element from the linked list, you’ll run into the same issue as before: waiting until you can deallocate it (or otherwise claim ownership)
+- The same solutions we discussed for the basic RCU pattern can work in this case as well
+** In general
+- you can build a wide variety of elaborate lock-free data structures based on compare-and-exchange operations on atomic pointers
+- you’ll always need a good strategy for deallocating or otherwise reclaiming ownership of the allocations
+** Further reading
+- [[https://en.wikipedia.org/wiki/Non-blocking_linked_list][Non-blocking linked list]] (wp)
+- [[https://lwn.net/Articles/610972/][Using RCU for linked lists — a case study]] (2014)
+
+* Queue-based Locks
+** Queue-based lock
+- implement a mutex (or other locking primitive), by manually keeping track of the queue of waiting threads
+- Such a mutex could be implemented as a single AtomicPtr that can point to a (list of) waiting threads
+** Queue-based lock
+- Each element in this list needs to contain something that can be used to wake up the corresponding thread, such as a ~std::thread::Thread~ object.
+- Some unused bits of the atomic pointer can be used to store the state of the mutex itself, and whatever is necessary for managing the state of the queue
+** [[./raal_10in04.png]]
+** There are many variations possible
+- The queue could be protected by its own lock bit
+- Or it could be implemented as a (partially) lock-free structure
+** variations
+- The elements don’t have to be allocated on the heap
+- could be local variables of the threads that are waiting
+** variations
+- The queue could be a doubly-linked list
+- with pointers to the previous element as well as the next
+** variations
+- The first element could also include a pointer to the last element
+- allows efficiently appending an element at the end
+** only block and wake up
+- This pattern allows for implementing efficient locking primitives using only something that can be used to block and wake up a single thread
+- such as thread parking
+** Windows SRW locks
+- implemented with queue-based locks
+- [[https://marabos.nl/atomics/os-primitives.html#windows-srw][Slim reader-writer locks]] in chapter 8
+** Further reading:
+- [[https://github.com/rust-lang/rust/issues/93740#issuecomment-1064139337][Notes on the implementation of Windows SRW locks]]
+- [[https://github.com/kprotty/usync][A Rust implementation of queue-based locks]]
+** [[https://github.com/kprotty/usync][usync]] Rust library
+- ~Mutex~
+- ~RwLock~
+- ~Condvar~
+- ~Barrier~
+- ~Once~
+- ~ReentrantMutex~ (supports recursive locking)
+
+* Parking-lot Based Locks
+** Parking-lot Based Lock
+- Very small mutex
+- built upon the queue-based locks idea
+- move the queue into a global data structure
+- leave only one or two bits inside the mutex itself
+** Parking-lot Based Lock
+- the mutex only needs to be a single byte
+- could even put it in some unused bits of a pointer, allowing for very fine-grained locking at almost no extra cost
+** Parking-lot Based Lock
+- The global data structure could be a HashMap
+- map memory addresses to a queue of threads waiting on the mutex at that address
+** Parking-lot
+- This global data structure is often called a parking lot, since it’s a collection of parked threads.
+** [[./raal_10in05.png]]
+** Generalization
+- The pattern can be generalized by not only tracking queues for mutexes, but also for condition variables and other primitives
+- By tracking a queue for any atomic variable, this effectively provides a way to implement futex-like functionality on platforms that don’t natively support that
+** WebKit
+- This pattern is most well known from its 2015 implementation in WebKit, where it was used for locking JavaScript objects.
+- Its implementation inspired other implementations, such as the popular ~parking_lot~ Rust crate.
+** Further reading
+- [[https://webkit.org/blog/6161/locking-in-webkit/][Locking in WebKit]] (2016)
+- The [[https://docs.rs/parking_lot/latest/parking_lot/][parking lot]] crate
+  - ~Mutex~
+  - ~RwLock~
+  - ~Condvar~
+  - ~Once~
+
+* Sequence Lock
+** Sequence Lock
+- another solution to the problem of atomically updating (larger) data without using traditional (blocking) locks
+- uses an atomic counter that is odd while the data is being updated, and even when the data is ready to be read
+** Sequence Lock
+- The writing thread will have to increment the counter from even to odd before mutating the data
+- after which it has to increment the counter again to leave it at a (different) even value
+** Sequence Lock
+- Any reading thread can, at any point and without blocking, read the data by reading the counter both before and after
+- If the two values from the counter are equal and even, there was no concurrent mutation, meaning you read a valid copy of the data
+- Otherwise, you might have read data that was concurrently being modified, in which case you should just try again
+** [[./raal_10in06.png]]
+** Sequence Lock
+- make data available to other threads, without the possibility of the reading threads blocking the writing thread
+- often used in operating systems kernels and many embedded systems
+** Sequence Lock
+- Since the readers need only read access to the memory and no pointers are involved, this can be a great data structure to safely use in shared memory, between processes, without needing to trust the readers
+- For example, the Linux kernel uses this pattern to very efficiently provide timestamps to processes by providing them with read-only access to (shared) memory
+** Memory model
+- An interesting question is how this fits into the memory model
+- Concurrent non-atomic reads and writes to the same data result in undefined behavior, even if the read data is ignored
+- This means that, technically speaking, both reading and writing the data should be done using only atomic operations, even though the entire read or write does not have to be a single atomic operation.
+** Further reading
+- [[https://en.wikipedia.org/wiki/Seqlock][Seqlock]] in Linux (wp)
+- [[https://github.com/rust-lang/rfcs/pull/3301][Rust RFC 3301]], AtomicPerByte (2022)
+- The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+** The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+- This library provides the ~SeqLock~ type, which is a form of reader-writer lock that is heavily optimized for readers.
+** The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+- In certain situations, ~SeqLock~ can be two orders of magnitude faster than the standard library ~RwLock~ type. Another advantage is that readers cannot starve writers: a writer will never block even if there are readers currently accessing the ~SeqLock~.
+** The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+- The only downside of ~SeqLock~ is that it only works on types that are ~Copy~. This means that it is unsuitable for types that contains pointers to owned data.
+** The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+- You should instead use a ~RwLock~ if you need a reader-writer lock for types that are not ~Copy~.
+** The [[https://docs.rs/seqlock/latest/seqlock/][seqlock]] crate
+#+begin_src rust
+use seqlock::SeqLock;
+let lock = SeqLock::new(5);
+{
+    // Writing to the data involves a lock
+    let mut w = lock.lock_write();
+    *w += 1;
+    assert_eq!(*w, 6);
+}
+{
+    // Reading the data is a very fast operation
+    let r = lock.read();
+    assert_eq!(r, 6);
+}
+#+end_src
+
+* Teaching Materials
+** Rust concurrency
+- books
+- blog posts
+- articles
+- video courses
+- conference talks
+- other materials
+  
+* Thanks!
+[[./tim.jpg]]
+- [[https://mastodon.social/@oylenshpeegul][@oylenshpeegul@mastodon.social]]
+- oylenshpeegul@proton.me
