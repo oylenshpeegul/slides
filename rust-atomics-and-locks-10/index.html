@@ -19,12 +19,18 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide"><h1 class="title">Rust Atomics and Locks 10</h1><p class="subtitle"></p>
-<h2 class="author">Tim Heaney</h2>
+<h2 class="author">Tim Heaney</h2><h2 class="date">2023-11-29</h2>
 </section>
 
 <section>
-<section id="slide-orgb5b2004">
-<h2 id="orgb5b2004"><a href="https://marabos.nl/atomics/inspiration.html">Chapter 10. Ideas and Inspiration</a></h2>
+<section id="slide-org38295d4">
+<h2 id="org38295d4"><img src="./mara-bos.png" alt="mara-bos.png" /></h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org2d320c8">
+<h2 id="org2d320c8"><a href="https://marabos.nl/atomics/inspiration.html">Chapter 10. Ideas and Inspiration</a></h2>
 <ul>
 <li><a href="https://marabos.nl/atomics/inspiration.html#semaphore">Semaphore</a></li>
 <li><a href="https://marabos.nl/atomics/inspiration.html#rcu">RCU</a></li>
@@ -38,30 +44,30 @@
 </section>
 </section>
 <section>
-<section id="slide-org6ee5be6">
-<h2 id="org6ee5be6">Semaphore</h2>
-<div class="outline-text-2" id="text-org6ee5be6">
+<section id="slide-org53d8fd1">
+<h2 id="org53d8fd1">Semaphore</h2>
+<div class="outline-text-2" id="text-org53d8fd1">
 </div>
 </section>
-<section id="slide-org53c5c3e">
-<h3 id="org53c5c3e"><img src="./semaphore.jpg" alt="semaphore.jpg" /></h3>
+<section id="slide-orgd54c38c">
+<h3 id="orgd54c38c"><img src="./semaphore.jpg" alt="semaphore.jpg" /></h3>
 </section>
-<section id="slide-orgb70073f">
-<h3 id="orgb70073f">effectively just a counter with two operations</h3>
+<section id="slide-org9a17d4a">
+<h3 id="org9a17d4a">effectively just a counter with two operations</h3>
 <ul>
 <li><i>signal</i> (also called <i>up</i> or V)</li>
 <li><i>wait</i> (also called <i>down</i> or P)</li>
 
 </ul>
 </section>
-<section id="slide-org5553b31">
-<h3 id="org5553b31"><img src="./raal_10in01.png" alt="raal_10in01.png" /></h3>
+<section id="slide-org1c2f4d8">
+<h3 id="org1c2f4d8"><img src="./raal_10in01.png" alt="raal_10in01.png" /></h3>
 </section>
-<section id="slide-org1220a9f">
-<h3 id="org1220a9f"><img src="./dijkstra.jpg" alt="dijkstra.jpg" /></h3>
+<section id="slide-orgeb44bcf">
+<h3 id="orgeb44bcf"><img src="./dijkstra.jpg" alt="dijkstra.jpg" /></h3>
 </section>
-<section id="slide-orgf836078">
-<h3 id="orgf836078">Edsger W. Dijkstra</h3>
+<section id="slide-org866e0d7">
+<h3 id="org866e0d7">Edsger W. Dijkstra</h3>
 <ul>
 <li class="fragment appear"><a href="https://www.cs.utexas.edu/users/EWD/ewd00xx/EWD35.PDF">EWD35</a> (1962 or 3)</li>
 <li class="fragment appear"><i>Seinpaal</i> (semaphore)</li>
@@ -70,37 +76,37 @@
 
 </ul>
 </section>
-<section id="slide-orga728ed7">
-<h3 id="orga728ed7"><img src="./dijkstra.png" alt="dijkstra.png" /></h3>
+<section id="slide-org71b6a16">
+<h3 id="org71b6a16"><img src="./dijkstra.png" alt="dijkstra.png" /></h3>
 </section>
-<section id="slide-orgf5acded">
-<h3 id="orgf5acded">Semaphore can be implemented as</h3>
+<section id="slide-org36a2d6c">
+<h3 id="org36a2d6c">Semaphore can be implemented as</h3>
 <ul>
 <li>a <code>Mutex&lt;u32&gt;</code> for the counter</li>
 <li>a <code>Condvar</code> for wait operations to wait for</li>
 
 </ul>
 </section>
-<section id="slide-orga27c850">
-<h3 id="orga27c850">More efficient with futex operations</h3>
+<section id="slide-org8e9efd3">
+<h3 id="org8e9efd3">More efficient with futex operations</h3>
 <ul>
 <li><a href="https://marabos.nl/atomics/os-primitives.html#futex">Futex</a> in chapter 8</li>
 
 </ul>
 </section>
-<section id="slide-org229d1d9">
-<h3 id="org229d1d9">Binary semaphore</h3>
+<section id="slide-org63595a9">
+<h3 id="org63595a9">Binary semaphore</h3>
 <ul>
 <li>maximum value of one</li>
 <li>build other things with it</li>
 
 </ul>
 </section>
-<section id="slide-orgbd345df">
-<h3 id="orgbd345df"><img src="./binary-semaphore.png" alt="binary-semaphore.png" /></h3>
+<section id="slide-org41d757d">
+<h3 id="org41d757d"><img src="./binary-semaphore.png" alt="binary-semaphore.png" /></h3>
 </section>
-<section id="slide-org373d2cd">
-<h3 id="org373d2cd">Binary semaphore as mutex</h3>
+<section id="slide-org6dd24eb">
+<h3 id="org6dd24eb">Binary semaphore as mutex</h3>
 <ul>
 <li>initialize counter to one</li>
 <li>wait operation for locking</li>
@@ -108,8 +114,8 @@
 
 </ul>
 </section>
-<section id="slide-org26cb74e">
-<h3 id="org26cb74e">Binary semaphore for signaling</h3>
+<section id="slide-org3d5c4a8">
+<h3 id="org3d5c4a8">Binary semaphore for signaling</h3>
 <ul>
 <li>initialize counter to zero</li>
 <li>wait operation for <code>park</code></li>
@@ -117,19 +123,19 @@
 
 </ul>
 </section>
-<section id="slide-orgdd1faab">
-<h3 id="orgdd1faab"><img src="./semaphores.jpg" alt="semaphores.jpg" /></h3>
+<section id="slide-org13a8b90">
+<h3 id="org13a8b90"><img src="./semaphores.jpg" alt="semaphores.jpg" /></h3>
 </section>
-<section id="slide-org23ed2ce">
-<h3 id="org23ed2ce">:)</h3>
+<section id="slide-orgeb16e5d">
+<h3 id="orgeb16e5d">:)</h3>
 <blockquote >
 <p>
 Note how a mutex can be implemented using a semaphore, while a semaphore can be implemented using a mutex (and a condition variable). It’s advisable to avoid using a mutex-based semaphore to implement a semaphore-based mutex, and the other way around.
 </p>
 </blockquote>
 </section>
-<section id="slide-org42938ee">
-<h3 id="org42938ee">Further reading</h3>
+<section id="slide-orgf7e21f6">
+<h3 id="orgf7e21f6">Further reading</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Semaphore_(programming)">semaphore</a> (wp)</li>
 <li><a href="https://see.stanford.edu/materials/icsppcs107/23-Concurrency-Examples.pdf">Thread and Semaphore Examples</a> (course notes, 2008)</li>
@@ -139,54 +145,81 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-orgd58aa12">
-<h2 id="orgd58aa12">RCU</h2>
-<div class="outline-text-2" id="text-orgd58aa12">
+<section id="slide-org3bdf7ab">
+<h2 id="org3bdf7ab">RCU</h2>
+<div class="outline-text-2" id="text-org3bdf7ab">
 </div>
 </section>
-<section id="slide-orgf151c81">
-<h3 id="orgf151c81">RCU =&gt; read, copy, update</h3>
+<section id="slide-orgca2e03a">
+<h3 id="orgca2e03a">RWLock</h3>
+<ul>
+<li>multiple threads</li>
+<li>shared data</li>
+<li>many reads</li>
+<li>occasional writes</li>
+
+</ul>
 </section>
-<section id="slide-org0dad024">
-<h3 id="org0dad024"><img src="./raal_10in02.png" alt="raal_10in02.png" /></h3>
+<section id="slide-orgd24931d">
+<h3 id="orgd24931d">Atomic variables avoid locks</h3>
+<ul>
+<li>works for things like an integer</li>
+<li>not for larger things like structs</li>
+
+</ul>
 </section>
-<section id="slide-org16a8fdf">
-<h3 id="org16a8fdf">read, copy, modify, update, deallocate (RCMUD?)</h3>
+<section id="slide-orgbc3e6c8">
+<h3 id="orgbc3e6c8">Indirection</h3>
+<ul>
+<li>atomic pointer (<code>compare_exchange</code>)</li>
+<li>can't <i>modify</i> struct atomically</li>
+<li>can <i>replace</i> the struct atomically</li>
+
+</ul>
 </section>
-<section id="slide-org1951c4a">
-<h3 id="org1951c4a"><img src="./rcu0.png" alt="rcu0.png" /></h3>
+<section id="slide-orgfe62e59">
+<h3 id="orgfe62e59">RCU =&gt; read, copy, update</h3>
 </section>
-<section id="slide-orgaf39de3">
-<h3 id="orgaf39de3"><img src="./rcu1.png" alt="rcu1.png" /></h3>
+<section id="slide-orgdded70f">
+<h3 id="orgdded70f"><img src="./raal_10in02.png" alt="raal_10in02.png" /></h3>
 </section>
-<section id="slide-org8fa2050">
-<h3 id="org8fa2050"><img src="./rcu2.png" alt="rcu2.png" /></h3>
+<section id="slide-org4ffd983">
+<h3 id="org4ffd983">read, copy, modify, update, deallocate (RCMUD?)</h3>
 </section>
-<section id="slide-orgd432937">
-<h3 id="orgd432937"><img src="./rcu3.png" alt="rcu3.png" /></h3>
+<section id="slide-org882622e">
+<h3 id="org882622e"><img src="./rcu0.png" alt="rcu0.png" /></h3>
 </section>
-<section id="slide-org6ceeaaf">
-<h3 id="org6ceeaaf"><img src="./rcu3b.png" alt="rcu3b.png" /></h3>
+<section id="slide-orgb64de86">
+<h3 id="orgb64de86"><img src="./rcu1.png" alt="rcu1.png" /></h3>
 </section>
-<section id="slide-orge23a232">
-<h3 id="orge23a232"><img src="./rcu4.png" alt="rcu4.png" /></h3>
+<section id="slide-org8905a8e">
+<h3 id="org8905a8e"><img src="./rcu2.png" alt="rcu2.png" /></h3>
 </section>
-<section id="slide-org563e59a">
-<h3 id="org563e59a"><img src="./rcu4b.png" alt="rcu4b.png" /></h3>
+<section id="slide-org9318a5f">
+<h3 id="org9318a5f"><img src="./rcu3.png" alt="rcu3.png" /></h3>
 </section>
-<section id="slide-orgb73b10f">
-<h3 id="orgb73b10f"><img src="./rcu5.png" alt="rcu5.png" /></h3>
+<section id="slide-org549ad8b">
+<h3 id="org549ad8b"><img src="./rcu3b.png" alt="rcu3b.png" /></h3>
 </section>
-<section id="slide-org3ee830a">
-<h3 id="org3ee830a">De-allocating the old data</h3>
+<section id="slide-org8a700dc">
+<h3 id="org8a700dc"><img src="./rcu4.png" alt="rcu4.png" /></h3>
+</section>
+<section id="slide-orgfa0b1cf">
+<h3 id="orgfa0b1cf"><img src="./rcu4b.png" alt="rcu4b.png" /></h3>
+</section>
+<section id="slide-orgd5b342b">
+<h3 id="orgd5b342b"><img src="./rcu5.png" alt="rcu5.png" /></h3>
+</section>
+<section id="slide-orgcb154e6">
+<h3 id="orgcb154e6">De-allocating the old data</h3>
 <ul>
 <li>some readers still have old data</li>
 <li>cannot delete until they're done</li>
 
 </ul>
 </section>
-<section id="slide-org0e2ef8e">
-<h3 id="org0e2ef8e">Possible solutions</h3>
+<section id="slide-org2381570">
+<h3 id="org2381570">Possible solutions</h3>
 <ul>
 <li class="fragment appear">ignoring (leak memory)
 <ul>
@@ -194,37 +227,47 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 <li class="fragment appear"><a href="https://doc.rust-lang.org/nomicon/leaking.html">leaking</a> is not unsafe</li>
 
 </ul></li>
+
+</ul>
+</section>
+<section id="slide-org4956c00">
+<h3 id="org4956c00"><img src="./leaks.png" alt="leaks.png" /></h3>
+</section>
+<section id="slide-orgc1248b1">
+<h3 id="orgc1248b1">Possible solutions</h3>
+<ul>
+<li class="fragment appear">ignoring (leak memory)</li>
 <li class="fragment appear">reference counting</li>
 <li class="fragment appear">garbage collection</li>
-<li class="fragment appear"><a href="https://en.wikipedia.org/wiki/Hazard_pointer">hazard pointers</a></li>
+<li class="fragment appear"><a href="http://erdani.org/publications/cuj-2004-12.pdf">hazard pointers</a></li>
 <li class="fragment appear">quiescent state tracking</li>
 
 </ul>
 </section>
-<section id="slide-orgffae0cc">
-<h3 id="orgffae0cc">RCU =&gt; Linux kernel 2.5 (2002)</h3>
+<section id="slide-org59f1a56">
+<h3 id="org59f1a56">RCU =&gt; Linux kernel 2.5 (2002)</h3>
 </section>
-<section id="slide-org3e7058b">
-<h3 id="org3e7058b">RCU</h3>
+<section id="slide-org8b443c5">
+<h3 id="org8b443c5">RCU</h3>
 <ul>
 <li>read, copy, update</li>
 <li>read-copy update</li>
 
 </ul>
 </section>
-<section id="slide-orgdbde5b0">
-<h3 id="orgdbde5b0">Fedor G. Pikus</h3>
+<section id="slide-orga633b48">
+<h3 id="orga633b48">Fedor G. Pikus</h3>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=rxQ5K9lo034">Read, Copy, Update, then what?</a></li>
 <li>CppCon 2017</li>
 
 </ul>
 </section>
-<section id="slide-orga9ebdde">
-<h3 id="orga9ebdde"><img src="./when-to-use-rcu.png" alt="when-to-use-rcu.png" /></h3>
+<section id="slide-org9489952">
+<h3 id="org9489952"><img src="./when-to-use-rcu.png" alt="when-to-use-rcu.png" /></h3>
 </section>
-<section id="slide-org0c25489">
-<h3 id="org0c25489">Other names for similar techniques</h3>
+<section id="slide-orgbcaae38">
+<h3 id="orgbcaae38">Other names for similar techniques</h3>
 <ul>
 <li><i>passive serialization</i></li>
 <li><i>MP defer</i></li>
@@ -232,17 +275,17 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-orga444c3a">
-<h3 id="orga444c3a"><a href="https://patentimages.storage.googleapis.com/7f/e5/00/2a6e3d59478597/US4809168.pdf">PASSIVE SERIALIZATION IN A MULTITASKING ENVIRONMENT</a></h3>
+<section id="slide-org330c22a">
+<h3 id="org330c22a"><a href="https://patentimages.storage.googleapis.com/7f/e5/00/2a6e3d59478597/US4809168.pdf">PASSIVE SERIALIZATION IN A MULTITASKING ENVIRONMENT</a></h3>
 </section>
-<section id="slide-org25f689d">
-<h3 id="org25f689d"><a href="https://www.ibm.com/docs/en/search/mp%20defer">MP Defer</a></h3>
+<section id="slide-orgb09911c">
+<h3 id="orgb09911c"><a href="https://www.ibm.com/docs/en/search/mp%20defer">MP Defer</a></h3>
 <p>
 (MP =&gt; master processor)
 </p>
 </section>
-<section id="slide-org995deb1">
-<h3 id="org995deb1">Rust RCU crates</h3>
+<section id="slide-org3ac390e">
+<h3 id="org3ac390e">Rust RCU crates</h3>
 <ul>
 <li><a href="https://docs.rs/arc-swap/latest/arc_swap/struct.ArcSwapAny.html#method.rcu">ArcSwapAny</a></li>
 <li><a href="https://docs.rs/rcu_cell/latest/rcu_cell/">rcu cell</a></li>
@@ -251,16 +294,16 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-org3d604f9">
-<h3 id="org3d604f9">Further reading</h3>
+<section id="slide-orgd619742">
+<h3 id="orgd619742">Further reading</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Read-copy-update">Read-copy-update</a> (wp)</li>
 <li><a href="https://lwn.net/Articles/262464/">What is RCU, Fundamentally?</a> (2007)</li>
 
 </ul>
 </section>
-<section id="slide-org471f1a5">
-<h3 id="org471f1a5">Thomas Edward Hart (2005)</h3>
+<section id="slide-org096559b">
+<h3 id="org096559b">Thomas Edward Hart (2005)</h3>
 <p>
 <a href="http://www.cs.toronto.edu/~tomhart/papers/tomhart_thesis.pdf">Comparative Performance of Memory Reclamation Strategies for Lock-free and Concurrently-readable Data Structures</a>
 </p>
@@ -274,13 +317,13 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-orgefe5b5c">
-<h2 id="orgefe5b5c">Lock-Free Linked List</h2>
-<div class="outline-text-2" id="text-orgefe5b5c">
+<section id="slide-org7cc71be">
+<h2 id="org7cc71be">Lock-Free Linked List</h2>
+<div class="outline-text-2" id="text-org7cc71be">
 </div>
 </section>
-<section id="slide-org59b8672">
-<h3 id="org59b8672">extension of RCU</h3>
+<section id="slide-orgdb58dab">
+<h3 id="orgdb58dab">extension of RCU</h3>
 <ul>
 <li>add an atomic pointer to the struct</li>
 <li>point to the next one</li>
@@ -288,11 +331,11 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-org146a7c3">
-<h3 id="org146a7c3"><img src="./raal_10in03.png" alt="raal_10in03.png" /></h3>
+<section id="slide-org5ef2c71">
+<h3 id="org5ef2c71"><img src="./raal_10in03.png" alt="raal_10in03.png" /></h3>
 </section>
-<section id="slide-org3df94fd">
-<h3 id="org3df94fd">insert</h3>
+<section id="slide-orgc583fc7">
+<h3 id="orgc583fc7">insert</h3>
 <ul>
 <li>allocate new element</li>
 <li>point its pointer at the first element in the list</li>
@@ -300,29 +343,29 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-orgf4a9e37">
-<h3 id="orgf4a9e37"><img src="./list-rcu-add.png" alt="list-rcu-add.png" /></h3>
+<section id="slide-org4ff21cf">
+<h3 id="org4ff21cf"><img src="./list-rcu-add.png" alt="list-rcu-add.png" /></h3>
 </section>
-<section id="slide-orgef53213">
-<h3 id="orgef53213">delete</h3>
+<section id="slide-org4ff07cd">
+<h3 id="org4ff07cd">delete</h3>
 <ul>
 <li>atomically update the pointer before it to point to the element after it</li>
 
 </ul>
 </section>
-<section id="slide-org774a309">
-<h3 id="org774a309"><img src="./list-rcu-del.png" alt="list-rcu-del.png" /></h3>
+<section id="slide-org5b3ded5">
+<h3 id="org5b3ded5"><img src="./list-rcu-del.png" alt="list-rcu-del.png" /></h3>
 </section>
-<section id="slide-org91b324a">
-<h3 id="org91b324a">multiple writers</h3>
+<section id="slide-org59cbc6d">
+<h3 id="org59cbc6d">multiple writers</h3>
 <ul>
 <li>care must be taken to handle concurrent insertion or removal operations on neighboring elements</li>
 <li>Otherwise, you might accidentally also remove a concurrently newly inserted element, or undo the removal of a concurrently removed element</li>
 
 </ul>
 </section>
-<section id="slide-org1ae29e1">
-<h3 id="org1ae29e1">To keep things simple</h3>
+<section id="slide-org26759c6">
+<h3 id="org26759c6">To keep things simple</h3>
 <ul>
 <li>use a regular mutex to avoid concurrent mutations</li>
 <li>reading is still a lock-free operation</li>
@@ -330,24 +373,24 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-org4d45acd">
-<h3 id="org4d45acd">RCU</h3>
+<section id="slide-orge3627a0">
+<h3 id="orge3627a0">RCU</h3>
 <ul>
 <li>After detaching an element from the linked list, you’ll run into the same issue as before: waiting until you can deallocate it (or otherwise claim ownership)</li>
 <li>The same solutions we discussed for the basic RCU pattern can work in this case as well</li>
 
 </ul>
 </section>
-<section id="slide-orgd0bac15">
-<h3 id="orgd0bac15">In general</h3>
+<section id="slide-org327a058">
+<h3 id="org327a058">In general</h3>
 <ul>
 <li>you can build a wide variety of elaborate lock-free data structures based on compare-and-exchange operations on atomic pointers</li>
 <li>you’ll always need a good strategy for deallocating or otherwise reclaiming ownership of the allocations</li>
 
 </ul>
 </section>
-<section id="slide-org1bf9d5f">
-<h3 id="org1bf9d5f">Further reading</h3>
+<section id="slide-org76269e2">
+<h3 id="org76269e2">Further reading</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Non-blocking_linked_list">Non-blocking linked list</a> (wp)</li>
 <li><a href="https://lwn.net/Articles/610972/">Using RCU for linked lists — a case study</a> (2014)</li>
@@ -357,88 +400,88 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-org072e75f">
-<h2 id="org072e75f">Queue-based Locks</h2>
-<div class="outline-text-2" id="text-org072e75f">
+<section id="slide-org8357746">
+<h2 id="org8357746">Queue-based Locks</h2>
+<div class="outline-text-2" id="text-org8357746">
 </div>
 </section>
-<section id="slide-orgb4df51d">
-<h3 id="orgb4df51d">Queue-based lock</h3>
+<section id="slide-org8091ce8">
+<h3 id="org8091ce8">Queue-based lock</h3>
 <ul>
 <li>implement a mutex (or other locking primitive), by manually keeping track of the queue of waiting threads</li>
 <li>Such a mutex could be implemented as a single AtomicPtr that can point to a (list of) waiting threads</li>
 
 </ul>
 </section>
-<section id="slide-org90670e0">
-<h3 id="org90670e0">Queue-based lock</h3>
+<section id="slide-org663689e">
+<h3 id="org663689e">Queue-based lock</h3>
 <ul>
 <li>Each element in this list needs to contain something that can be used to wake up the corresponding thread, such as a <code>std::thread::Thread</code> object.</li>
 <li>Some unused bits of the atomic pointer can be used to store the state of the mutex itself, and whatever is necessary for managing the state of the queue</li>
 
 </ul>
 </section>
-<section id="slide-org13dfbc0">
-<h3 id="org13dfbc0"><img src="./raal_10in04.png" alt="raal_10in04.png" /></h3>
+<section id="slide-orgb3c9461">
+<h3 id="orgb3c9461"><img src="./raal_10in04.png" alt="raal_10in04.png" /></h3>
 </section>
-<section id="slide-org315b4a1">
-<h3 id="org315b4a1">There are many variations possible</h3>
+<section id="slide-orge7bbf2f">
+<h3 id="orge7bbf2f">There are many variations possible</h3>
 <ul>
 <li>The queue could be protected by its own lock bit</li>
 <li>Or it could be implemented as a (partially) lock-free structure</li>
 
 </ul>
 </section>
-<section id="slide-org195f80a">
-<h3 id="org195f80a">variations</h3>
+<section id="slide-org2c6029f">
+<h3 id="org2c6029f">variation</h3>
 <ul>
 <li>The elements don’t have to be allocated on the heap</li>
 <li>could be local variables of the threads that are waiting</li>
 
 </ul>
 </section>
-<section id="slide-org17ae520">
-<h3 id="org17ae520">variations</h3>
+<section id="slide-orga19843f">
+<h3 id="orga19843f">variation</h3>
 <ul>
 <li>The queue could be a doubly-linked list</li>
 <li>with pointers to the previous element as well as the next</li>
 
 </ul>
 </section>
-<section id="slide-org226e81d">
-<h3 id="org226e81d">variations</h3>
+<section id="slide-org48b513c">
+<h3 id="org48b513c">variation</h3>
 <ul>
 <li>The first element could also include a pointer to the last element</li>
 <li>allows efficiently appending an element at the end</li>
 
 </ul>
 </section>
-<section id="slide-org362da22">
-<h3 id="org362da22">only block and wake up</h3>
+<section id="slide-orgd640a94">
+<h3 id="orgd640a94">only block and wake up</h3>
 <ul>
 <li>This pattern allows for implementing efficient locking primitives using only something that can be used to block and wake up a single thread</li>
 <li>such as thread parking</li>
 
 </ul>
 </section>
-<section id="slide-org8153996">
-<h3 id="org8153996">Windows SRW locks</h3>
+<section id="slide-orgeffdda6">
+<h3 id="orgeffdda6">Windows SRW locks</h3>
 <ul>
 <li>implemented with queue-based locks</li>
 <li><a href="https://marabos.nl/atomics/os-primitives.html#windows-srw">Slim reader-writer locks</a> in chapter 8</li>
 
 </ul>
 </section>
-<section id="slide-org2aac99c">
-<h3 id="org2aac99c">Further reading:</h3>
+<section id="slide-orgdd8f2a7">
+<h3 id="orgdd8f2a7">Further reading:</h3>
 <ul>
 <li><a href="https://github.com/rust-lang/rust/issues/93740#issuecomment-1064139337">Notes on the implementation of Windows SRW locks</a></li>
 <li><a href="https://github.com/kprotty/usync">A Rust implementation of queue-based locks</a></li>
 
 </ul>
 </section>
-<section id="slide-orgac286c1">
-<h3 id="orgac286c1"><a href="https://github.com/kprotty/usync">usync</a> Rust library</h3>
+<section id="slide-orga6ff4e1">
+<h3 id="orga6ff4e1"><a href="https://github.com/kprotty/usync">usync</a> Rust library</h3>
 <ul>
 <li><code>Mutex</code></li>
 <li><code>RwLock</code></li>
@@ -452,13 +495,13 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-org58493b2">
-<h2 id="org58493b2">Parking-lot Based Locks</h2>
-<div class="outline-text-2" id="text-org58493b2">
+<section id="slide-org598eb77">
+<h2 id="org598eb77">Parking-lot Based Locks</h2>
+<div class="outline-text-2" id="text-org598eb77">
 </div>
 </section>
-<section id="slide-org0dceedb">
-<h3 id="org0dceedb">Parking-lot Based Lock</h3>
+<section id="slide-org678ed34">
+<h3 id="org678ed34">Parking-lot Based Lock</h3>
 <ul>
 <li>Very small mutex</li>
 <li>built upon the queue-based locks idea</li>
@@ -467,50 +510,56 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-org87a2fc3">
-<h3 id="org87a2fc3">Parking-lot Based Lock</h3>
+<section id="slide-org2c2391d">
+<h3 id="org2c2391d">Parking-lot Based Lock</h3>
 <ul>
 <li>the mutex only needs to be a single byte</li>
 <li>could even put it in some unused bits of a pointer, allowing for very fine-grained locking at almost no extra cost</li>
 
 </ul>
 </section>
-<section id="slide-org889f129">
-<h3 id="org889f129">Parking-lot Based Lock</h3>
+<section id="slide-orgaecad42">
+<h3 id="orgaecad42"><a href="https://muxup.com/2023q4/storing-data-in-pointers">Storing data in pointers</a></h3>
+<p>
+blog post by Alex Bradbury earlier this week
+</p>
+</section>
+<section id="slide-org4f9d2a1">
+<h3 id="org4f9d2a1">Parking-lot Based Lock</h3>
 <ul>
 <li>The global data structure could be a HashMap</li>
 <li>map memory addresses to a queue of threads waiting on the mutex at that address</li>
 
 </ul>
 </section>
-<section id="slide-orgff672c0">
-<h3 id="orgff672c0">Parking-lot</h3>
+<section id="slide-orgf69a11c">
+<h3 id="orgf69a11c">Parking-lot</h3>
 <ul>
 <li>This global data structure is often called a parking lot, since it’s a collection of parked threads.</li>
 
 </ul>
 </section>
-<section id="slide-org349be31">
-<h3 id="org349be31"><img src="./raal_10in05.png" alt="raal_10in05.png" /></h3>
+<section id="slide-org968c11d">
+<h3 id="org968c11d"><img src="./raal_10in05.png" alt="raal_10in05.png" /></h3>
 </section>
-<section id="slide-org733eab6">
-<h3 id="org733eab6">Generalization</h3>
+<section id="slide-org11d574c">
+<h3 id="org11d574c">Generalization</h3>
 <ul>
 <li>The pattern can be generalized by not only tracking queues for mutexes, but also for condition variables and other primitives</li>
 <li>By tracking a queue for any atomic variable, this effectively provides a way to implement futex-like functionality on platforms that don’t natively support that</li>
 
 </ul>
 </section>
-<section id="slide-orgcbebaf2">
-<h3 id="orgcbebaf2">WebKit</h3>
+<section id="slide-org325f7b0">
+<h3 id="org325f7b0">WebKit</h3>
 <ul>
 <li>This pattern is most well known from its 2015 implementation in WebKit, where it was used for locking JavaScript objects.</li>
 <li>Its implementation inspired other implementations, such as the popular <code>parking_lot</code> Rust crate.</li>
 
 </ul>
 </section>
-<section id="slide-orged94fa1">
-<h3 id="orged94fa1">Further reading</h3>
+<section id="slide-org04d4f29">
+<h3 id="org04d4f29">Further reading</h3>
 <ul>
 <li><a href="https://webkit.org/blog/6161/locking-in-webkit/">Locking in WebKit</a> (2016)</li>
 <li>The <a href="https://docs.rs/parking_lot/latest/parking_lot/">parking lot</a> crate
@@ -527,29 +576,29 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-org13c913c">
-<h2 id="org13c913c">Sequence Lock</h2>
-<div class="outline-text-2" id="text-org13c913c">
+<section id="slide-org49b1a66">
+<h2 id="org49b1a66">Sequence Lock</h2>
+<div class="outline-text-2" id="text-org49b1a66">
 </div>
 </section>
-<section id="slide-orgf880b4b">
-<h3 id="orgf880b4b">Sequence Lock</h3>
+<section id="slide-orgc86d98c">
+<h3 id="orgc86d98c">Sequence Lock</h3>
 <ul>
 <li>another solution to the problem of atomically updating (larger) data without using traditional (blocking) locks</li>
 <li>uses an atomic counter that is odd while the data is being updated, and even when the data is ready to be read</li>
 
 </ul>
 </section>
-<section id="slide-org2d7bad2">
-<h3 id="org2d7bad2">Sequence Lock</h3>
+<section id="slide-orgd86237c">
+<h3 id="orgd86237c">Sequence Lock</h3>
 <ul>
 <li>The writing thread will have to increment the counter from even to odd before mutating the data</li>
 <li>after which it has to increment the counter again to leave it at a (different) even value</li>
 
 </ul>
 </section>
-<section id="slide-orgce2719b">
-<h3 id="orgce2719b">Sequence Lock</h3>
+<section id="slide-org7831b1d">
+<h3 id="org7831b1d">Sequence Lock</h3>
 <ul>
 <li>Any reading thread can, at any point and without blocking, read the data by reading the counter both before and after</li>
 <li>If the two values from the counter are equal and even, there was no concurrent mutation, meaning you read a valid copy of the data</li>
@@ -557,27 +606,27 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-orgdf33686">
-<h3 id="orgdf33686"><img src="./raal_10in06.png" alt="raal_10in06.png" /></h3>
+<section id="slide-org497eb86">
+<h3 id="org497eb86"><img src="./raal_10in06.png" alt="raal_10in06.png" /></h3>
 </section>
-<section id="slide-org6348775">
-<h3 id="org6348775">Sequence Lock</h3>
+<section id="slide-orgeee6fd5">
+<h3 id="orgeee6fd5">Sequence Lock</h3>
 <ul>
 <li>make data available to other threads, without the possibility of the reading threads blocking the writing thread</li>
 <li>often used in operating systems kernels and many embedded systems</li>
 
 </ul>
 </section>
-<section id="slide-orgf9cb4ec">
-<h3 id="orgf9cb4ec">Sequence Lock</h3>
+<section id="slide-org2285293">
+<h3 id="org2285293">Sequence Lock</h3>
 <ul>
 <li>Since the readers need only read access to the memory and no pointers are involved, this can be a great data structure to safely use in shared memory, between processes, without needing to trust the readers</li>
 <li>For example, the Linux kernel uses this pattern to very efficiently provide timestamps to processes by providing them with read-only access to (shared) memory</li>
 
 </ul>
 </section>
-<section id="slide-orgc00e2ff">
-<h3 id="orgc00e2ff">Memory model</h3>
+<section id="slide-org3c4a555">
+<h3 id="org3c4a555">Memory model</h3>
 <ul>
 <li>An interesting question is how this fits into the memory model</li>
 <li>Concurrent non-atomic reads and writes to the same data result in undefined behavior, even if the read data is ignored</li>
@@ -585,8 +634,8 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-org041a7ac">
-<h3 id="org041a7ac">Further reading</h3>
+<section id="slide-org878e00c">
+<h3 id="org878e00c">Further reading</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Seqlock">Seqlock</a> in Linux (wp)</li>
 <li><a href="https://github.com/rust-lang/rfcs/pull/3301">Rust RFC 3301</a>, AtomicPerByte (2022)</li>
@@ -594,36 +643,36 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 
 </ul>
 </section>
-<section id="slide-orgb5ef541">
-<h3 id="orgb5ef541">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
+<section id="slide-orgc58766c">
+<h3 id="orgc58766c">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
 <ul>
 <li>This library provides the <code>SeqLock</code> type, which is a form of reader-writer lock that is heavily optimized for readers.</li>
 
 </ul>
 </section>
-<section id="slide-orga619e24">
-<h3 id="orga619e24">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
+<section id="slide-orgdb44389">
+<h3 id="orgdb44389">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
 <ul>
 <li>In certain situations, <code>SeqLock</code> can be two orders of magnitude faster than the standard library <code>RwLock</code> type. Another advantage is that readers cannot starve writers: a writer will never block even if there are readers currently accessing the <code>SeqLock</code>.</li>
 
 </ul>
 </section>
-<section id="slide-orge7b2e40">
-<h3 id="orge7b2e40">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
+<section id="slide-org4e82c48">
+<h3 id="org4e82c48">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
 <ul>
 <li>The only downside of <code>SeqLock</code> is that it only works on types that are <code>Copy</code>. This means that it is unsuitable for types that contains pointers to owned data.</li>
 
 </ul>
 </section>
-<section id="slide-orgc516a20">
-<h3 id="orgc516a20">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
+<section id="slide-org5fe2035">
+<h3 id="org5fe2035">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
 <ul>
 <li>You should instead use a <code>RwLock</code> if you need a reader-writer lock for types that are not <code>Copy</code>.</li>
 
 </ul>
 </section>
-<section id="slide-org5b91d46">
-<h3 id="org5b91d46">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
+<section id="slide-org4ec03fc">
+<h3 id="org4ec03fc">The <a href="https://docs.rs/seqlock/latest/seqlock/">seqlock</a> crate</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #5317ac;">use</span> <span style="color: #0000c0;">seqlock</span>::<span style="color: #005a5f;">SeqLock</span>;
@@ -645,13 +694,13 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-org6c88d9d">
-<h2 id="org6c88d9d">Teaching Materials</h2>
-<div class="outline-text-2" id="text-org6c88d9d">
+<section id="slide-org0ff989d">
+<h2 id="org0ff989d">Teaching Materials</h2>
+<div class="outline-text-2" id="text-org0ff989d">
 </div>
 </section>
-<section id="slide-org0b5f5dc">
-<h3 id="org0b5f5dc">Rust concurrency</h3>
+<section id="slide-org4b55c55">
+<h3 id="org4b55c55">Rust concurrency</h3>
 <ul>
 <li>books</li>
 <li>blog posts</li>
@@ -665,10 +714,10 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 </section>
 </section>
 <section>
-<section id="slide-orgb299a8b">
-<h2 id="orgb299a8b">Thanks!</h2>
+<section id="slide-org2a432ed">
+<h2 id="org2a432ed">Thanks!</h2>
 
-<div id="orgca59dfe" class="figure">
+<div id="org733a0d2" class="figure">
 <p><img src="./tim.jpg" alt="tim.jpg" />
 </p>
 </div>
