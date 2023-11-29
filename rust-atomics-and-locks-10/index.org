@@ -3,8 +3,11 @@
 #+REVEAL_THEME: simple
 #+REVEAL_EXTRA_CSS: ./style.css
 #+Title: Rust Atomics and Locks 10
+#+Date: 2023-11-29
 #+Author: Tim Heaney
 #+Email: oylenshpeegul@proton.me
+
+* [[./mara-bos.png]]
 
 * [[https://marabos.nl/atomics/inspiration.html][Chapter 10. Ideas and Inspiration]]
 - [[https://marabos.nl/atomics/inspiration.html#semaphore][Semaphore]]
@@ -20,9 +23,11 @@
  - /signal/ (also called /up/ or V)
  - /wait/ (also called /down/ or P)
 ** [[./raal_10in01.png]]
+** [[./dijkstra.jpg]]
 ** Edsger W. Dijkstra
+#+ATTR_REVEAL: :frag (appear)
 - [[https://www.cs.utexas.edu/users/EWD/ewd00xx/EWD35.PDF][EWD35]] (1962 or 3)
-- /Seinpalen/ (semaphores)
+- /Seinpaal/ (semaphore)
 - V => /Vrijgave/ (release)
 - P => /Passering/ (pass)
 ** [[./dijkstra.png]]
@@ -43,7 +48,7 @@
 - initialize counter to zero
 - wait operation for ~park~
 - signal operation for ~unpark~
-** [[./semaphore.jpg]]
+** [[./semaphores.jpg]]
 ** :)
 #+BEGIN_QUOTE
 Note how a mutex can be implemented using a semaphore, while a semaphore can be implemented using a mutex (and a condition variable). It’s advisable to avoid using a mutex-based semaphore to implement a semaphore-based mutex, and the other way around.
@@ -53,6 +58,18 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 - [[https://see.stanford.edu/materials/icsppcs107/23-Concurrency-Examples.pdf][Thread and Semaphore Examples]] (course notes, 2008)
 
 * RCU
+** RWLock
+- multiple threads
+- shared data
+- many reads
+- occasional writes
+** Atomic variables avoid locks
+- works for things like an integer
+- not for larger things like structs
+** Indirection
+- atomic pointer (~compare_exchange~)
+- can't /modify/ struct atomically
+- can /replace/ the struct atomically
 ** RCU => read, copy, update
 ** [[./raal_10in02.png]]
 ** read, copy, modify, update, deallocate (RCMUD?)
@@ -62,15 +79,24 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 ** [[./rcu3.png]]
 ** [[./rcu3b.png]]
 ** [[./rcu4.png]]
+** [[./rcu4b.png]]
 ** [[./rcu5.png]]
 ** De-allocating the old data
 - some readers still have old data
 - cannot delete until they're done
 ** Possible solutions
+#+ATTR_REVEAL: :frag (appear)
+- ignoring (leak memory)
+    #+ATTR_REVEAL: :frag (appear)
+    - [[https://blog.sunfishcode.online/eyra-does-the-impossible/][Eyra does the impossible]]
+    - [[https://doc.rust-lang.org/nomicon/leaking.html][leaking]] is not unsafe
+** [[./leaks.png]]
+** Possible solutions
+#+ATTR_REVEAL: :frag (appear)
 - ignoring (leak memory)
 - reference counting
 - garbage collection
-- hazard pointers
+- [[http://erdani.org/publications/cuj-2004-12.pdf][hazard pointers]]
 - quiescent state tracking
 ** RCU => Linux kernel 2.5 (2002)
 ** RCU
@@ -85,6 +111,8 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 - /MP defer/
 - /generations/
 ** [[https://patentimages.storage.googleapis.com/7f/e5/00/2a6e3d59478597/US4809168.pdf][PASSIVE SERIALIZATION IN A MULTITASKING ENVIRONMENT]]
+** [[https://www.ibm.com/docs/en/search/mp%20defer][MP Defer]]
+(MP => master processor)
 ** Rust RCU crates
 - [[https://docs.rs/arc-swap/latest/arc_swap/struct.ArcSwapAny.html#method.rcu][ArcSwapAny]]
 - [[https://docs.rs/rcu_cell/latest/rcu_cell/][rcu cell]]
@@ -93,19 +121,26 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 ** Further reading
 - [[https://en.wikipedia.org/wiki/Read-copy-update][Read-copy-update]] (wp)
 - [[https://lwn.net/Articles/262464/][What is RCU, Fundamentally?]] (2007)
+** Thomas Edward Hart (2005)
+[[http://www.cs.toronto.edu/~tomhart/papers/tomhart_thesis.pdf][Comparative Performance of Memory Reclamation Strategies for Lock-free and Concurrently-readable Data Structures]]
+- quiescent-state-based reclamation (QSBR)
+- safe memory reclamation (SMR)
+- epoch-based reclamation (EBR)
 
 * Lock-Free Linked List
 ** extension of RCU
 - add an atomic pointer to the struct
 - point to the next one
 - viola, a linked list!
+** [[./raal_10in03.png]]
 ** insert
 - allocate new element
 - point its pointer at the first element in the list
 - atomically update the initial pointer to point to your newly allocated element
-** [[./raal_10in03.png]]
+** [[./list-rcu-add.png]]
 ** delete
 - atomically update the pointer before it to point to the element after it
+** [[./list-rcu-del.png]]  
 ** multiple writers
 - care must be taken to handle concurrent insertion or removal operations on neighboring elements
 - Otherwise, you might accidentally also remove a concurrently newly inserted element, or undo the removal of a concurrently removed element
@@ -134,13 +169,13 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 ** There are many variations possible
 - The queue could be protected by its own lock bit
 - Or it could be implemented as a (partially) lock-free structure
-** variations
+** variation
 - The elements don’t have to be allocated on the heap
 - could be local variables of the threads that are waiting
-** variations
+** variation
 - The queue could be a doubly-linked list
 - with pointers to the previous element as well as the next
-** variations
+** variation
 - The first element could also include a pointer to the last element
 - allows efficiently appending an element at the end
 ** only block and wake up
@@ -169,6 +204,8 @@ Note how a mutex can be implemented using a semaphore, while a semaphore can be 
 ** Parking-lot Based Lock
 - the mutex only needs to be a single byte
 - could even put it in some unused bits of a pointer, allowing for very fine-grained locking at almost no extra cost
+** [[https://muxup.com/2023q4/storing-data-in-pointers][Storing data in pointers]]
+blog post by Alex Bradbury earlier this week
 ** Parking-lot Based Lock
 - The global data structure could be a HashMap
 - map memory addresses to a queue of threads waiting on the mutex at that address
