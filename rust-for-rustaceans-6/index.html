@@ -23,13 +23,13 @@
 </section>
 
 <section>
-<section id="slide-org1f8ede7">
-<h2 id="org1f8ede7">Agenda</h2>
-<div class="outline-text-2" id="text-org1f8ede7">
+<section id="slide-orge869ad6">
+<h2 id="orge869ad6">Agenda</h2>
+<div class="outline-text-2" id="text-orge869ad6">
 </div>
 </section>
-<section id="slide-org7bc56da">
-<h3 id="org7bc56da">Testing</h3>
+<section id="slide-org0967066">
+<h3 id="org0967066">Testing</h3>
 <ul>
 <li>Review</li>
 <li><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></li>
@@ -39,13 +39,13 @@
 </section>
 </section>
 <section>
-<section id="slide-org091f204">
-<h2 id="org091f204">Review</h2>
-<div class="outline-text-2" id="text-org091f204">
+<section id="slide-org6314356">
+<h2 id="org6314356">Review</h2>
+<div class="outline-text-2" id="text-org6314356">
 </div>
 </section>
-<section id="slide-org00641ce">
-<h3 id="org00641ce"><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></h3>
+<section id="slide-org80d1af3">
+<h3 id="org80d1af3"><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></h3>
 <ul>
 <li>chapter 11: <a href="https://doc.rust-lang.org/stable/book/ch11-00-testing.html">Writing Automated Tests</a></li>
 <li><a href="https://www.youtube.com/watch?v=8A3oCwtenuY&amp;list=PL8AZrEE2-qZkcOFmpC03TwnVHSr25luFp&amp;index=5">Rust Book Study Session</a> video
@@ -58,8 +58,8 @@
 </ul>
 
 </section>
-<section id="slide-org2d55c34">
-<h3 id="org2d55c34">Rust testing</h3>
+<section id="slide-orga028402">
+<h3 id="orga028402">Rust testing</h3>
 <ol>
 <li>Unit testing</li>
 <li>Doc testing</li>
@@ -69,8 +69,8 @@
 </ol>
 
 </section>
-<section id="slide-orgb15d298">
-<h3 id="orgb15d298">Cargo generates "hello world" for a binary</h3>
+<section id="slide-org58008b6">
+<h3 id="org58008b6">Cargo generates "hello world" for a binary</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo new hello
@@ -80,8 +80,8 @@
 </div>
 
 </section>
-<section id="slide-orge609b03">
-<h3 id="orge609b03"><code>hello/src/main.rs</code></h3>
+<section id="slide-org60a140c">
+<h3 id="org60a140c"><code>hello/src/main.rs</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -91,8 +91,8 @@
 </div>
 
 </section>
-<section id="slide-orgf969e66">
-<h3 id="orgf969e66"><code>cargo run</code></h3>
+<section id="slide-org9ef9a6f">
+<h3 id="org9ef9a6f"><code>cargo run</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cd hello
@@ -106,8 +106,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-org795a259">
-<h3 id="org795a259">Cargo generates a test for a library</h3>
+<section id="slide-org55ae6ba">
+<h3 id="org55ae6ba">Cargo generates a test for a library</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo new adder --lib
@@ -117,8 +117,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-org5a1c07f">
-<h3 id="org5a1c07f"><code>adder/src/lib.rs</code></h3>
+<section id="slide-org8f31879">
+<h3 id="org8f31879"><code>adder/src/lib.rs</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">add</span><span style="color: #ffffff;">(</span><span style="color: #00d3d0;">left</span>: <span style="color: #6ae4b9;">usize</span>, <span style="color: #00d3d0;">right</span>: <span style="color: #6ae4b9;">usize</span><span style="color: #ffffff;">)</span> -&gt; <span style="color: #6ae4b9;">usize</span> <span style="color: #ffffff;">{</span>
@@ -139,8 +139,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-org25afe41">
-<h3 id="org25afe41"><code>cargo test</code></h3>
+<section id="slide-orgc2ae593">
+<h3 id="orgc2ae593"><code>cargo test</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cd adder
@@ -163,8 +163,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org6ea9d13">
-<h3 id="org6ea9d13">Macros</h3>
+<section id="slide-orgd493b73">
+<h3 id="orgd493b73">Macros</h3>
 <ul>
 <li class="fragment appear"><code>#[test]</code>, <code>#[cfg(test)]</code></li>
 <li class="fragment appear"><code>assert!</code>, <code>assert_eq!</code>, &amp;c.</li>
@@ -173,22 +173,22 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org907553b">
-<h3 id="org907553b">Rust 1.78 stabilized <a href="https://blog.rust-lang.org/2024/05/02/Rust-1.78.0.html#diagnostic-attributes">diagnostic attributes</a></h3>
+<section id="slide-org56bda1b">
+<h3 id="org56bda1b">Rust 1.78 stabilized <a href="https://blog.rust-lang.org/2024/05/02/Rust-1.78.0.html#diagnostic-attributes">diagnostic attributes</a></h3>
 <p>
 <code>#[diagnostic]</code>
 </p>
 
 </section>
-<section id="slide-org2b2be5c">
-<h3 id="org2b2be5c">Unstable Rust has a <a href="https://doc.rust-lang.org/nightly/unstable-book/library-features/test.html">bench attribute</a></h3>
+<section id="slide-org8e7025d">
+<h3 id="org8e7025d">Unstable Rust has a <a href="https://doc.rust-lang.org/nightly/unstable-book/library-features/test.html">bench attribute</a></h3>
 <p>
 <code>#[bench]</code>
 </p>
 
 </section>
-<section id="slide-orgcf1d51a">
-<h3 id="orgcf1d51a"><a href="https://exercism.org/">exercism.org</a></h3>
+<section id="slide-org721aa68">
+<h3 id="org721aa68"><a href="https://exercism.org/">exercism.org</a></h3>
 <ul>
 <li>Programming exercises</li>
 <li>Test-based</li>
@@ -200,13 +200,13 @@ running 0 tests
 </section>
 </section>
 <section>
-<section id="slide-org2b15025">
-<h2 id="org2b15025"><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></h2>
-<div class="outline-text-2" id="text-org2b15025">
+<section id="slide-org7f08c12">
+<h2 id="org7f08c12"><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></h2>
+<div class="outline-text-2" id="text-org7f08c12">
 </div>
 </section>
-<section id="slide-orgda9272d">
-<h3 id="orgda9272d">6. Testing</h3>
+<section id="slide-org8a1d21d">
+<h3 id="org8a1d21d">6. Testing</h3>
 <ul>
 <li>Rust Testing Mechanisms</li>
 <li>Additional Testing Tools</li>
@@ -215,8 +215,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgffe7201">
-<h3 id="orgffe7201">Rust Testing Mechanisms</h3>
+<section id="slide-orga463a51">
+<h3 id="orga463a51">Rust Testing Mechanisms</h3>
 <ul>
 <li>The Test Harness</li>
 <li><code>#[cfg(test)]</code></li>
@@ -227,8 +227,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org2aab799">
-<h3 id="org2aab799">Additional Testing Tools</h3>
+<section id="slide-org53d45b8">
+<h3 id="org53d45b8">Additional Testing Tools</h3>
 <ul>
 <li>Linting</li>
 <li>Test Generation
@@ -249,23 +249,23 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orga8c5913">
-<h3 id="orga8c5913">Summary</h3>
+<section id="slide-org219b5dd">
+<h3 id="org219b5dd">Summary</h3>
 
 </section>
 </section>
 <section>
-<section id="slide-org4ab0b20">
-<h2 id="org4ab0b20">Rust Testing Mechanisms</h2>
-<div class="outline-text-2" id="text-org4ab0b20">
+<section id="slide-org35530a0">
+<h2 id="org35530a0">Rust Testing Mechanisms</h2>
+<div class="outline-text-2" id="text-org35530a0">
 </div>
 </section>
-<section id="slide-org37b80cc">
-<h3 id="org37b80cc">The Test Harness</h3>
+<section id="slide-orgc4d21d6">
+<h3 id="orgc4d21d6">The Test Harness</h3>
 
 </section>
-<section id="slide-org1cdf38a">
-<h3 id="org1cdf38a">look at adder again</h3>
+<section id="slide-org6f934ea">
+<h3 id="org6f934ea">look at adder again</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">add</span><span style="color: #ffffff;">(</span><span style="color: #00d3d0;">left</span>: <span style="color: #6ae4b9;">usize</span>, <span style="color: #00d3d0;">right</span>: <span style="color: #6ae4b9;">usize</span><span style="color: #ffffff;">)</span> -&gt; <span style="color: #6ae4b9;">usize</span> <span style="color: #ffffff;">{</span>
@@ -286,8 +286,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orga8a975b">
-<h3 id="orga8a975b"><code>cargo expand</code></h3>
+<section id="slide-org89ade60">
+<h3 id="org89ade60"><code>cargo expand</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#!</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">feature</span><span style="color: #ff62d4;">(</span><span style="color: #ff9077;">prelude_import</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">]</span>
@@ -302,8 +302,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orga3fb647">
-<h3 id="orga3fb647"><code>cargo expand --lib --tests</code></h3>
+<section id="slide-org4463a48">
+<h3 id="org4463a48"><code>cargo expand --lib --tests</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#!</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">feature</span><span style="color: #ff62d4;">(</span><span style="color: #ff9077;">prelude_import</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">]</span>
@@ -367,8 +367,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org57dac37">
-<h3 id="org57dac37">The Test Harness</h3>
+<section id="slide-orgdbe1925">
+<h3 id="orgdbe1925">The Test Harness</h3>
 <ul>
 <li>the default test harness (libtest)</li>
 <li>can write our own test harness</li>
@@ -376,8 +376,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org4c4021a">
-<h3 id="org4c4021a">in Cargo.toml</h3>
+<section id="slide-org4e60465">
+<h3 id="org4e60465">in Cargo.toml</h3>
 <div class="org-src-container">
 
 <pre  class="src src-toml"   ><code trim>[[<span style="color: #6ae4b9;">test</span>]]
@@ -388,8 +388,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org09bc9df">
-<h3 id="org09bc9df">Arguments to the default test harness</h3>
+<section id="slide-orgefaba82">
+<h3 id="orgefaba82">Arguments to the default test harness</h3>
 <ul>
 <li><code>--help</code></li>
 <li><code>--nocapture</code></li>
@@ -399,8 +399,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org9af47fe">
-<h3 id="org9af47fe">Why use a custom (or no) test harness</h3>
+<section id="slide-orgcf72f28">
+<h3 id="orgcf72f28">Why use a custom (or no) test harness</h3>
 <ul>
 <li>benchmarks</li>
 <li>fuzzers</li>
@@ -410,8 +410,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org06c59c4">
-<h3 id="org06c59c4"><code>#[cfg(test)]</code></h3>
+<section id="slide-orgedd22ff">
+<h3 id="orgedd22ff"><code>#[cfg(test)]</code></h3>
 <ul>
 <li>compilation context</li>
 <li>Caira mentioned last time in Chapter 5</li>
@@ -421,8 +421,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org01f0ae6">
-<h3 id="org01f0ae6">Mocking</h3>
+<section id="slide-org343e1a5">
+<h3 id="org343e1a5">Mocking</h3>
 <ul>
 <li>mocks and fakes
 <ul>
@@ -441,8 +441,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgf753fab">
-<h3 id="orgf753fab"><a href="https://www.youtube.com/watch?v=B81U7Vunhuc">Mocking</a></h3>
+<section id="slide-org802cc79">
+<h3 id="org802cc79"><a href="https://www.youtube.com/watch?v=B81U7Vunhuc">Mocking</a></h3>
 <ul>
 <li>no standard approach yet</li>
 <li><a href="https://crates.io/crates/mockall">mockall</a> crate</li>
@@ -450,16 +450,16 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgb5918c4">
-<h3 id="orgb5918c4">Test-Only APIs</h3>
+<section id="slide-org9fbfc7d">
+<h3 id="org9fbfc7d">Test-Only APIs</h3>
 <ul>
 <li>First, code that's only for testing</li>
 
 </ul>
 
 </section>
-<section id="slide-orgfc3b031">
-<h3 id="orgfc3b031">testing the hashbrown crate</h3>
+<section id="slide-org9c4e374">
+<h3 id="org9c4e374">testing the hashbrown crate</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
@@ -473,8 +473,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org0cc9cbb">
-<h3 id="org0cc9cbb">Private fields</h3>
+<section id="slide-org5c65156">
+<h3 id="org5c65156">Private fields</h3>
 <ul>
 <li>We are testing in <code>HashMap</code></li>
 <li>So we can see <code>m.table</code> even though it's private</li>
@@ -484,8 +484,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org0bc1ac2">
-<h3 id="org0bc1ac2">Create an accessor just for testing</h3>
+<section id="slide-org22ef14c">
+<h3 id="org22ef14c">Create an accessor just for testing</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">impl</span> <span style="color: #6ae4b9;">RawTable</span> <span style="color: #ffffff;">{</span>
@@ -498,8 +498,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org93bbe6a">
-<h3 id="org93bbe6a">Change test to call method</h3>
+<section id="slide-org56e928b">
+<h3 id="org56e928b">Change test to call method</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
@@ -513,16 +513,16 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org7c0192c">
-<h3 id="org7c0192c">Bookkeeping for Test Assertions</h3>
+<section id="slide-orgb4a8942">
+<h3 id="orgb4a8942">Bookkeeping for Test Assertions</h3>
 <ul>
 <li>Second, data that's only for testing</li>
 
 </ul>
 
 </section>
-<section id="slide-orgfa9d3d6">
-<h3 id="orgfa9d3d6">keep track of writes</h3>
+<section id="slide-org7e428c9">
+<h3 id="org7e428c9">keep track of writes</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">BufWriter</span><span style="color: #ffffff;">&lt;</span><span style="color: #6ae4b9;">T</span><span style="color: #ffffff;">&gt;</span> <span style="color: #ffffff;">{</span>
@@ -534,8 +534,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgd96df70">
-<h3 id="orgd96df70">keep track of writes</h3>
+<section id="slide-orgaa22e26">
+<h3 id="orgaa22e26">keep track of writes</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">BufWriter</span><span style="color: #ffffff;">&lt;</span><span style="color: #6ae4b9;">T</span><span style="color: #ffffff;">&gt;</span> <span style="color: #ffffff;">{</span>
@@ -558,12 +558,12 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org60c4645">
-<h3 id="org60c4645">Doctests</h3>
+<section id="slide-orgaf72986">
+<h3 id="orgaf72986">Doctests</h3>
 
 </section>
-<section id="slide-org590a975">
-<h3 id="org590a975">Docstring for function</h3>
+<section id="slide-org51fb1b6">
+<h3 id="org51fb1b6">Docstring for function</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Completely frobnifies a number through I/O.</span>
@@ -579,8 +579,8 @@ running 0 tests
 
 
 </section>
-<section id="slide-org687018e">
-<h3 id="org687018e">Add Doctests</h3>
+<section id="slide-org5cc8ad6">
+<h3 id="org5cc8ad6">Add code in triple backticks</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Completely frobnifies a number through I/O.</span>
@@ -602,8 +602,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgadf8d67">
-<h3 id="orgadf8d67">Everything in backticks is Rust code</h3>
+<section id="slide-org758120b">
+<h3 id="org758120b">Everything in backticks is Rust code</h3>
 <ul>
 <li>automatically run as doctests</li>
 <li>integration tests
@@ -621,8 +621,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org468c3f3">
-<h3 id="org468c3f3">Must use the function you're testing</h3>
+<section id="slide-orgab103df">
+<h3 id="orgab103df">Must use the function you're testing</h3>
 <ul>
 <li>Can hide code with #</li>
 <li><code>/// # use mylib::frobnify;</code></li>
@@ -630,8 +630,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgb03eafc">
-<h3 id="orgb03eafc">Results</h3>
+<section id="slide-orgbdca96f">
+<h3 id="orgbdca96f">Results</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Here's an example that uses ? on multiple types</span>
@@ -648,8 +648,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org94a9da6">
-<h3 id="org94a9da6">This example depends on <code>anyhow</code></h3>
+<section id="slide-orgf913cdd">
+<h3 id="orgf913cdd">This example depends on <code>anyhow</code></h3>
 <ul>
 <li>Cargo.toml</li>
 
@@ -662,8 +662,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgd97d449">
-<h3 id="orgd97d449">Block comments</h3>
+<section id="slide-org013bb8b">
+<h3 id="org013bb8b">Block comments</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// You could even replace an entire block of code completely,</span>
@@ -681,8 +681,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgcdb3cc0">
-<h3 id="orgcdb3cc0">Irony!</h3>
+<section id="slide-org1c54a4f">
+<h3 id="org1c54a4f">Irony!</h3>
 <blockquote >
 <p>
 NOTE: Use this feature with care; it can be frustrating to users if they copy-paste an example and then it doesn't work because of required steps that you've hidden.
@@ -690,8 +690,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </blockquote>
 
 </section>
-<section id="slide-org6e9a313">
-<h3 id="org6e9a313">Attributes</h3>
+<section id="slide-orgdc93adc">
+<h3 id="orgdc93adc">Attributes</h3>
 <ul>
 <li><code>should_panic</code>, <code>ignore</code>, <code>no_run</code></li>
 <li>This code should fail to compile</li>
@@ -710,13 +710,13 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </section>
 </section>
 <section>
-<section id="slide-org4c6f6f6">
-<h2 id="org4c6f6f6">Additional Testing Tools</h2>
-<div class="outline-text-2" id="text-org4c6f6f6">
+<section id="slide-org73f488f">
+<h2 id="org73f488f">Additional Testing Tools</h2>
+<div class="outline-text-2" id="text-org73f488f">
 </div>
 </section>
-<section id="slide-org0648bee">
-<h3 id="org0648bee">Linting</h3>
+<section id="slide-org3e5968f">
+<h3 id="org3e5968f">Linting</h3>
 <ul>
 <li>clippy
 <ul>
@@ -734,8 +734,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 
 </ul>
 </section>
-<section id="slide-orga40a24d">
-<h3 id="orga40a24d">rustc warnings</h3>
+<section id="slide-org030ef14">
+<h3 id="org030ef14">rustc warnings</h3>
 <ul>
 <li>Not all are on by default!</li>
 <li><code>rust_2018_idioms</code></li>
@@ -751,9 +751,27 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul></li>
 
 </ul>
+
 </section>
-<section id="slide-org43c59b3">
-<h3 id="org43c59b3">Test Generation</h3>
+<section id="slide-orgef3d05b">
+<h3 id="orgef3d05b">rustc warnings</h3>
+<ul>
+<li>enable warning
+<ul>
+<li><code>#![warn(missing_docs)]</code></li>
+
+</ul></li>
+<li>convert warning to error
+<ul>
+<li><code>#![deny(missing_docs)]</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgb8dfea5">
+<h3 id="orgb8dfea5">Test Generation</h3>
 <ul>
 <li>Fuzzing</li>
 <li>Property-Based Testing
@@ -766,8 +784,17 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orgab45b9c">
-<h3 id="orgab45b9c"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
+<section id="slide-orge7aefff">
+<h3 id="orge7aefff"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
+
+<div id="org22cf413" class="figure">
+<p><img src="./claessen-hughes.jpg" alt="claessen-hughes.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgc8ddb2a">
+<h3 id="orgc8ddb2a"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
 <ul>
 <li>originated in Haskell in 1999</li>
 <li>by <a href="https://www.cse.chalmers.se/~koen/">Koen Claessen</a> and <a href="https://www.cse.chalmers.se/~rjmh/">John Hughes</a></li>
@@ -777,8 +804,43 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-org71e1f16">
-<h3 id="org71e1f16">Test Augmentation</h3>
+<section id="slide-orga175501">
+<h3 id="orga175501"><a href="https://ericnormand.me/issues/purelyfunctional-tv-newsletter-459-revisiting-the-open-closed-principle">Paul Cipher</a></h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">use</span> <span style="color: #00bcff;">proptest</span>::<span style="color: #00bcff;">prelude</span>::*;
+<span style="color: #ff9077;">proptest!</span> <span style="color: #ffffff;">{</span>
+    <span style="color: #ff9077;">#</span><span style="color: #ff62d4;">[</span><span style="color: #ff9077;">test</span><span style="color: #ff62d4;">]</span>
+    <span style="color: #a8a8a8;">// </span><span style="color: #a8a8a8;">r"\PC*" is a regex which generates a string of arbitrary non-control characters.</span>
+    <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">encode_then_decode</span><span style="color: #ff62d4;">(</span>s <span style="color: #b6a0ff;">in</span> <span style="color: #79a8ff;">r"\PC*"</span><span style="color: #ff62d4;">)</span> <span style="color: #ff62d4;">{</span>
+        <span style="color: #ff9077;">prop_assert_eq!</span><span style="color: #3fdfd0;">(</span>decode<span style="color: #fba849;">(</span><span style="color: #ffffff; background-color: #000000;">&amp;</span>encode<span style="color: #9f80ff;">(</span><span style="color: #ffffff; background-color: #000000;">&amp;</span>s<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>, s.to_ascii_uppercase<span style="color: #fba849;">()</span><span style="color: #3fdfd0;">)</span>;
+    <span style="color: #ff62d4;">}</span>
+<span style="color: #ffffff;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org97ea7b1">
+<h3 id="org97ea7b1">proptest =&gt; unit test</h3>
+<div class="org-src-container">
+
+<pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
+<span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">test_encode</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">""</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">""</span><span style="color: #ff62d4;">)</span>;
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">"a"</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">"A"</span><span style="color: #ff62d4;">)</span>;
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">"hello"</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">"HMQXA"</span><span style="color: #ff62d4;">)</span>;
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">"newsletter"</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">"NSBPEQYNYW"</span><span style="color: #ff62d4;">)</span>;
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">"1 hug"</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">"1 HCB"</span><span style="color: #ff62d4;">)</span>;
+
+    <span style="color: #a8a8a8;">// </span><span style="color: #a8a8a8;">proptest found this one!</span>
+    <span style="color: #ff9077;">assert_eq!</span><span style="color: #ff62d4;">(</span>encode<span style="color: #3fdfd0;">(</span><span style="color: #79a8ff;">"z"</span><span style="color: #3fdfd0;">)</span>, <span style="color: #79a8ff;">"Z"</span><span style="color: #ff62d4;">)</span>;
+<span style="color: #ffffff;">}</span>
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orge6d51dc">
+<h3 id="orge6d51dc">Test Augmentation</h3>
 <ul>
 <li><a href="https://github.com/rust-lang/miri">Miri</a>
 <ul>
@@ -794,8 +856,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orga5731c2">
-<h3 id="orga5731c2">Miri</h3>
+<section id="slide-orgffd9084">
+<h3 id="orgffd9084">Miri</h3>
 <ul>
 <li>rustup +nightly component add miri</li>
 <li>cargo +nightly miri test</li>
@@ -804,8 +866,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-org9ca03c9">
-<h3 id="org9ca03c9">Miri</h3>
+<section id="slide-orgfa647e8">
+<h3 id="orgfa647e8">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -818,8 +880,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-orgbd50222">
-<h3 id="orgbd50222">Miri</h3>
+<section id="slide-orgde9e908">
+<h3 id="orgde9e908">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo +nightly run
@@ -831,8 +893,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-org7d85a0c">
-<h3 id="org7d85a0c">Miri</h3>
+<section id="slide-org071519c">
+<h3 id="org071519c">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo +nightly miri run
@@ -937,8 +999,8 @@ error: aborting due to 1 previous error
 </div>
 
 </section>
-<section id="slide-org188ac08">
-<h3 id="org188ac08">Performance Testing</h3>
+<section id="slide-orga6b1966">
+<h3 id="orga6b1966">Performance Testing</h3>
 <ul>
 <li>Performance Variance</li>
 <li>Compiler Optimizations</li>
@@ -947,8 +1009,8 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-orgeba3b08">
-<h3 id="orgeba3b08">Performance Variance</h3>
+<section id="slide-orge99eb0b">
+<h3 id="orge99eb0b">Performance Variance</h3>
 <ul>
 <li><a href="https://docs.rs/hdrhistogram/latest/hdrhistogram/">hdrhistogram</a> (high dynamic range histogram)
 <ul>
@@ -965,16 +1027,16 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-org472685a">
-<h3 id="org472685a">Compiler Optimizations</h3>
+<section id="slide-org4656cde">
+<h3 id="org4656cde">Compiler Optimizations</h3>
 <ul>
-<li><a href="https://godbolt.org/">godbolt.org</a> ("Compiler Explorer")</li>
-<li><del>cargo-asm</del> <a href="https://docs.rs/cargo-show-asm/latest/cargo_show_asm/">cargo-show-asm</a>
+<li class="fragment appear"><a href="https://godbolt.org/">godbolt.org</a> ("Compiler Explorer")</li>
+<li class="fragment appear"><del>cargo-asm</del> <a href="https://docs.rs/cargo-show-asm/latest/cargo_show_asm/">cargo-show-asm</a>
 <ul>
 <li>command is still "cargo asm"</li>
 
 </ul></li>
-<li><a href="https://doc.rust-lang.org/std/hint/fn.black_box.html"><code>std::hint::black_box</code></a>
+<li class="fragment appear"><a href="https://doc.rust-lang.org/std/hint/fn.black_box.html"><code>std::hint::black_box</code></a>
 <ul>
 <li>stabilized in <a href="https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1660-2022-12-15">version 1.66</a> (2022-12-15)</li>
 
@@ -983,15 +1045,15 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-org5d8f116">
-<h3 id="org5d8f116">cargo-show-asm</h3>
+<section id="slide-org879abad">
+<h3 id="org879abad">cargo-show-asm</h3>
 <p>
 cargo install cargo-show-asm
 </p>
 
 </section>
-<section id="slide-org40834ef">
-<h3 id="org40834ef">cargo-show-asm</h3>
+<section id="slide-orgeea54af">
+<h3 id="orgeea54af">cargo-show-asm</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">vec_push</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -1006,8 +1068,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-org64daef9">
-<h3 id="org64daef9">cargo-show-asm</h3>
+<section id="slide-orgad1d4d0">
+<h3 id="orgad1d4d0">cargo-show-asm</h3>
 <p>
 <code>cargo asm vec_push</code>
 </p>
@@ -1068,8 +1130,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-org9456508">
-<h3 id="org9456508"><code>black_box</code></h3>
+<section id="slide-orgdd845b9">
+<h3 id="orgdd845b9"><code>black_box</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">use</span> <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">hint</span>::black_box;
@@ -1087,131 +1149,131 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-org9238823">
-<h3 id="org9238823"><code>black_box</code> asm</h3>
+<section id="slide-org404dc69">
+<h3 id="org404dc69"><code>black_box</code> asm</h3>
 <div class="org-src-container">
 
-<pre  class="src src-rust"   ><code trim>.section .text.<span style="color: #00bcff;">mylib</span>::vec_push,<span style="color: #79a8ff;">"ax"</span>,@progbits
-        .globl  <span style="color: #00bcff;">mylib</span>::vec_push
-        .p2align        4, 0x90
-        .<span style="color: #b6a0ff;">type</span>   <span style="color: #00bcff;">mylib</span>::vec_push,@function
-<span style="color: #00bcff;">mylib</span>::<span style="color: #00d3d0;">vec_push</span>:
-        .cfi_startproc
-        .cfi_personality 155, <span style="color: #6ae4b9;">DW</span>.<span style="color: #b6a0ff;">ref</span>.rust_eh_personality
-        .cfi_lsda 27, .<span style="color: #6ae4b9;">Lexception0</span>
-        push r14
-        .cfi_def_cfa_offset 16
-        push rbx
-        .cfi_def_cfa_offset 24
-        sub rsp, 104
-        .cfi_def_cfa_offset 128
-        .cfi_offset rbx, -24
-        .cfi_offset r14, -16
-        mov rax, qword ptr <span style="color: #ffffff;">[</span>rip + __rust_no_alloc_shim_is_unstable@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        movzx eax, byte ptr <span style="color: #ffffff;">[</span>rax<span style="color: #ffffff;">]</span>
-        mov edi, 16
-        mov esi, 4
-        call qword ptr <span style="color: #ffffff;">[</span>rip + __rust_alloc@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        test rax, rax
-        je .<span style="color: #6ae4b9;">LBB0_6</span>
-        mov rbx, rax
-        call qword ptr <span style="color: #ffffff;">[</span>rip + <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">time</span>::<span style="color: #6ae4b9;">Instant</span>::now@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 56<span style="color: #ffffff;">]</span>, rax
-        mov dword ptr <span style="color: #ffffff;">[</span>rsp + 64<span style="color: #ffffff;">]</span>, edx
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        lea rax, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov dword ptr <span style="color: #ffffff;">[</span>rbx<span style="color: #ffffff;">]</span>, 0
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        lea rcx, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov dword ptr <span style="color: #ffffff;">[</span>rbx + 4<span style="color: #ffffff;">]</span>, 1
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov dword ptr <span style="color: #ffffff;">[</span>rbx + 8<span style="color: #ffffff;">]</span>, 2
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        mov dword ptr <span style="color: #ffffff;">[</span>rbx + 12<span style="color: #ffffff;">]</span>, 3
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
-        #<span style="color: #6ae4b9;">APP</span>
-        #<span style="color: #6ae4b9;">NO_APP</span>
-        lea rdi, <span style="color: #ffffff;">[</span>rsp + 56<span style="color: #ffffff;">]</span>
-        call qword ptr <span style="color: #ffffff;">[</span>rip + <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">time</span>::<span style="color: #6ae4b9;">Instant</span>::elapsed@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 88<span style="color: #ffffff;">]</span>, rax
-        mov dword ptr <span style="color: #ffffff;">[</span>rsp + 96<span style="color: #ffffff;">]</span>, edx
-        lea rax, <span style="color: #ffffff;">[</span>rsp + 88<span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 72<span style="color: #ffffff;">]</span>, rax
-        mov rax, qword ptr <span style="color: #ffffff;">[</span>rip + <span style="color: #ff62d4;">&lt;</span><span style="color: #00bcff;">core</span>::<span style="color: #00bcff;">time</span>::<span style="color: #6ae4b9;">Duration</span> <span style="color: #b6a0ff;">as</span> <span style="color: #00bcff;">core</span>::<span style="color: #00bcff;">fmt</span>::<span style="color: #6ae4b9;">Debug</span><span style="color: #ff62d4;">&gt;</span>::fmt@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 80<span style="color: #ffffff;">]</span>, rax
-        lea rax, <span style="color: #ffffff;">[</span>rip + .<span style="color: #6ae4b9;">L__unnamed_1</span><span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rax
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 16<span style="color: #ffffff;">]</span>, 2
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 40<span style="color: #ffffff;">]</span>, 0
-        lea rax, <span style="color: #ffffff;">[</span>rsp + 72<span style="color: #ffffff;">]</span>
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 24<span style="color: #ffffff;">]</span>, rax
-        mov qword ptr <span style="color: #ffffff;">[</span>rsp + 32<span style="color: #ffffff;">]</span>, 1
-        lea rdi, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
-        call qword ptr <span style="color: #ffffff;">[</span>rip + <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">io</span>::<span style="color: #00bcff;">stdio</span>::_print@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov esi, 16
-        mov edx, 4
-        mov rdi, rbx
-        call qword ptr <span style="color: #ffffff;">[</span>rip + __rust_dealloc@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        add rsp, 104
-        .cfi_def_cfa_offset 24
-        pop rbx
-        .cfi_def_cfa_offset 16
-        pop r14
-        .cfi_def_cfa_offset 8
-        ret
-.<span style="color: #00d3d0;">LBB0_6</span>:
-        .cfi_def_cfa_offset 128
-        mov edi, 4
-        mov esi, 16
-        call qword ptr <span style="color: #ffffff;">[</span>rip + <span style="color: #00bcff;">alloc</span>::<span style="color: #00bcff;">alloc</span>::handle_alloc_error@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov r14, rax
-        mov esi, 16
-        mov edx, 4
-        mov rdi, rbx
-        call qword ptr <span style="color: #ffffff;">[</span>rip + __rust_dealloc@<span style="color: #6ae4b9;">GOTPCREL</span><span style="color: #ffffff;">]</span>
-        mov rdi, r14
-        call _Unwind_Resume@<span style="color: #6ae4b9;">PLT</span>
+<pre  class="src src-asm"   ><code trim><span style="color: #b6a0ff;">.section</span> .text.mylib::vec_push,<span style="color: #79a8ff;">"ax"</span>,@progbits
+        <span style="color: #b6a0ff;">.globl</span>  mylib::vec_push
+        <span style="color: #b6a0ff;">.p2align</span>        4, 0x90
+        <span style="color: #b6a0ff;">.type</span>   mylib::vec_push,@function
+<span style="color: #feacd0;">mylib</span>::vec_push:
+        <span style="color: #b6a0ff;">.cfi_startproc</span>
+        <span style="color: #b6a0ff;">.cfi_personality</span> 155, DW.ref.rust_eh_personality
+        <span style="color: #b6a0ff;">.cfi_lsda</span> 27, .Lexception0
+        <span style="color: #b6a0ff;">push</span> r14
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 16
+        <span style="color: #b6a0ff;">push</span> rbx
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 24
+        <span style="color: #b6a0ff;">sub</span> rsp, 104
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 128
+        <span style="color: #b6a0ff;">.cfi_offset</span> rbx, -24
+        <span style="color: #b6a0ff;">.cfi_offset</span> r14, -16
+        <span style="color: #b6a0ff;">mov</span> rax, qword ptr <span style="color: #ffffff;">[</span>rip + __rust_no_alloc_shim_is_unstable@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">movzx</span> eax, byte ptr <span style="color: #ffffff;">[</span>rax<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> edi, 16
+        <span style="color: #b6a0ff;">mov</span> esi, 4
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + __rust_alloc@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">test</span> rax, rax
+        <span style="color: #b6a0ff;">je</span> .LBB0_6
+        <span style="color: #b6a0ff;">mov</span> rbx, rax
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + std::time::Instant::now@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 56<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rsp + 64<span style="color: #ffffff;">]</span>, edx
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        <span style="color: #b6a0ff;">lea</span> rax, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rbx<span style="color: #ffffff;">]</span>, 0
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        <span style="color: #b6a0ff;">lea</span> rcx, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rbx + 4<span style="color: #ffffff;">]</span>, 1
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rbx + 8<span style="color: #ffffff;">]</span>, 2
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rbx + 12<span style="color: #ffffff;">]</span>, 3
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rbx
+        #APP
+        #NO_APP
+        <span style="color: #b6a0ff;">lea</span> rdi, <span style="color: #ffffff;">[</span>rsp + 56<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + std::time::Instant::elapsed@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 88<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">mov</span> dword ptr <span style="color: #ffffff;">[</span>rsp + 96<span style="color: #ffffff;">]</span>, edx
+        <span style="color: #b6a0ff;">lea</span> rax, <span style="color: #ffffff;">[</span>rsp + 88<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 72<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">mov</span> rax, qword ptr <span style="color: #ffffff;">[</span>rip + &lt;core::time::Duration as core::fmt::Debug&gt;::fmt@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 80<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">lea</span> rax, <span style="color: #ffffff;">[</span>rip + .L__unnamed_1<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 16<span style="color: #ffffff;">]</span>, 2
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 40<span style="color: #ffffff;">]</span>, 0
+        <span style="color: #b6a0ff;">lea</span> rax, <span style="color: #ffffff;">[</span>rsp + 72<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 24<span style="color: #ffffff;">]</span>, rax
+        <span style="color: #b6a0ff;">mov</span> qword ptr <span style="color: #ffffff;">[</span>rsp + 32<span style="color: #ffffff;">]</span>, 1
+        <span style="color: #b6a0ff;">lea</span> rdi, <span style="color: #ffffff;">[</span>rsp + 8<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + std::io::stdio::_print@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> esi, 16
+        <span style="color: #b6a0ff;">mov</span> edx, 4
+        <span style="color: #b6a0ff;">mov</span> rdi, rbx
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + __rust_dealloc@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">add</span> rsp, 104
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 24
+        <span style="color: #b6a0ff;">pop</span> rbx
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 16
+        <span style="color: #b6a0ff;">pop</span> r14
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 8
+        <span style="color: #b6a0ff;">ret</span>
+<span style="color: #feacd0;">.LBB0_6</span>:
+        <span style="color: #b6a0ff;">.cfi_def_cfa_offset</span> 128
+        <span style="color: #b6a0ff;">mov</span> edi, 4
+        <span style="color: #b6a0ff;">mov</span> esi, 16
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + alloc::alloc::handle_alloc_error@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> r14, rax
+        <span style="color: #b6a0ff;">mov</span> esi, 16
+        <span style="color: #b6a0ff;">mov</span> edx, 4
+        <span style="color: #b6a0ff;">mov</span> rdi, rbx
+        <span style="color: #b6a0ff;">call</span> qword ptr <span style="color: #ffffff;">[</span>rip + __rust_dealloc@GOTPCREL<span style="color: #ffffff;">]</span>
+        <span style="color: #b6a0ff;">mov</span> rdi, r14
+        <span style="color: #b6a0ff;">call</span> _Unwind_Resume@PLT
 
-======================= <span style="color: #6ae4b9;">Additional</span> context =========================
+======================= Additional context =========================
 
-.section .rodata..<span style="color: #6ae4b9;">L__unnamed_2</span>,<span style="color: #79a8ff;">"a"</span>,@progbits
-        .ascii  <span style="color: #79a8ff;">"took "</span>
-        .size   .<span style="color: #6ae4b9;">L__unnamed_2</span>, 5
+<span style="color: #b6a0ff;">.section</span> .rodata..L__unnamed_2,<span style="color: #79a8ff;">"a"</span>,@progbits
+        <span style="color: #b6a0ff;">.ascii</span>  <span style="color: #79a8ff;">"took "</span>
+        <span style="color: #b6a0ff;">.size</span>   .L__unnamed_2, 5
 
-.section .rodata..<span style="color: #6ae4b9;">L__unnamed_3</span>,<span style="color: #79a8ff;">"a"</span>,@progbits
-        .byte   10
-        .size   .<span style="color: #6ae4b9;">L__unnamed_3</span>, 1
+<span style="color: #b6a0ff;">.section</span> .rodata..L__unnamed_3,<span style="color: #79a8ff;">"a"</span>,@progbits
+        <span style="color: #b6a0ff;">.byte</span>   10
+        <span style="color: #b6a0ff;">.size</span>   .L__unnamed_3, 1
 
-.section .data.rel.ro..<span style="color: #6ae4b9;">L__unnamed_1</span>,<span style="color: #79a8ff;">"aw"</span>,@progbits
-        .p2align        3, 0x0
-        .quad   .<span style="color: #6ae4b9;">L__unnamed_2</span>
-        .asciz  <span style="color: #79a8ff;">"\005\000\000\000\000\000\000"</span>
-        .quad   .<span style="color: #6ae4b9;">L__unnamed_3</span>
-        .asciz  <span style="color: #79a8ff;">"\001\000\000\000\000\000\000"</span>
-        .size   .<span style="color: #6ae4b9;">L__unnamed_1</span>, 32
+<span style="color: #b6a0ff;">.section</span> .data.rel.ro..L__unnamed_1,<span style="color: #79a8ff;">"aw"</span>,@progbits
+        <span style="color: #b6a0ff;">.p2align</span>        3, 0x0
+        <span style="color: #b6a0ff;">.quad</span>   .L__unnamed_2
+        <span style="color: #b6a0ff;">.asciz</span>  <span style="color: #79a8ff;">"\005\000\000\000\000\000\000"</span>
+        <span style="color: #b6a0ff;">.quad</span>   .L__unnamed_3
+        <span style="color: #b6a0ff;">.asciz</span>  <span style="color: #79a8ff;">"\001\000\000\000\000\000\000"</span>
+        <span style="color: #b6a0ff;">.size</span>   .L__unnamed_1, 32
 </code></pre>
 </div>
 
 </section>
-<section id="slide-org7f10679">
-<h3 id="org7f10679">I/O Overhead Measurement</h3>
+<section id="slide-org2ef1823">
+<h3 id="org2ef1823">I/O Overhead Measurement</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">start</span> = <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">time</span>::<span style="color: #6ae4b9;">Instant</span>::now<span style="color: #ffffff;">()</span>;
@@ -1226,8 +1288,8 @@ cargo install cargo-show-asm
 </section>
 </section>
 <section>
-<section id="slide-orgd464e33">
-<h2 id="orgd464e33">Summary</h2>
+<section id="slide-org2b11f6a">
+<h2 id="org2b11f6a">Summary</h2>
 <ul>
 <li>Rust's built-in testing capabilities</li>
 <li>Testing facilities and techniques</li>
@@ -1239,10 +1301,10 @@ cargo install cargo-show-asm
 </section>
 </section>
 <section>
-<section id="slide-org20e1bc3">
-<h2 id="org20e1bc3">Thanks!</h2>
+<section id="slide-org63d330b">
+<h2 id="org63d330b">Thanks!</h2>
 
-<div id="orgb27b6c3" class="figure">
+<div id="org762cc05" class="figure">
 <p><img src="./tim.png" alt="tim.png" />
 </p>
 </div>
@@ -1259,7 +1321,6 @@ cargo install cargo-show-asm
 <script src="../plugin/markdown/markdown.js"></script>
 <script src="../plugin/zoom/zoom.js"></script>
 <script src="../plugin/notes/notes.js"></script>
-
 
 <script>
 // Full list of configuration options available here:
