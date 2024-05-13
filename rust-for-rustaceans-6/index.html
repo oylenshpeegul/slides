@@ -23,13 +23,13 @@
 </section>
 
 <section>
-<section id="slide-orge869ad6">
-<h2 id="orge869ad6">Agenda</h2>
-<div class="outline-text-2" id="text-orge869ad6">
+<section id="slide-orgea19107">
+<h2 id="orgea19107">Agenda</h2>
+<div class="outline-text-2" id="text-orgea19107">
 </div>
 </section>
-<section id="slide-org0967066">
-<h3 id="org0967066">Testing</h3>
+<section id="slide-org21408a4">
+<h3 id="org21408a4">Testing</h3>
 <ul>
 <li>Review</li>
 <li><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></li>
@@ -39,13 +39,13 @@
 </section>
 </section>
 <section>
-<section id="slide-org6314356">
-<h2 id="org6314356">Review</h2>
-<div class="outline-text-2" id="text-org6314356">
+<section id="slide-org179effb">
+<h2 id="org179effb">Review</h2>
+<div class="outline-text-2" id="text-org179effb">
 </div>
 </section>
-<section id="slide-org80d1af3">
-<h3 id="org80d1af3"><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></h3>
+<section id="slide-org18b5a36">
+<h3 id="org18b5a36"><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></h3>
 <ul>
 <li>chapter 11: <a href="https://doc.rust-lang.org/stable/book/ch11-00-testing.html">Writing Automated Tests</a></li>
 <li><a href="https://www.youtube.com/watch?v=8A3oCwtenuY&amp;list=PL8AZrEE2-qZkcOFmpC03TwnVHSr25luFp&amp;index=5">Rust Book Study Session</a> video
@@ -58,8 +58,8 @@
 </ul>
 
 </section>
-<section id="slide-orga028402">
-<h3 id="orga028402">Rust testing</h3>
+<section id="slide-orge602781">
+<h3 id="orge602781">Rust testing</h3>
 <ol>
 <li>Unit testing</li>
 <li>Doc testing</li>
@@ -69,8 +69,8 @@
 </ol>
 
 </section>
-<section id="slide-org58008b6">
-<h3 id="org58008b6">Cargo generates "hello world" for a binary</h3>
+<section id="slide-orge1d2a80">
+<h3 id="orge1d2a80">Cargo generates "hello world" for a binary</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo new hello
@@ -80,8 +80,8 @@
 </div>
 
 </section>
-<section id="slide-org60a140c">
-<h3 id="org60a140c"><code>hello/src/main.rs</code></h3>
+<section id="slide-org60d4340">
+<h3 id="org60d4340"><code>hello/src/main.rs</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -91,8 +91,8 @@
 </div>
 
 </section>
-<section id="slide-org9ef9a6f">
-<h3 id="org9ef9a6f"><code>cargo run</code></h3>
+<section id="slide-org4ff93e2">
+<h3 id="org4ff93e2"><code>cargo run</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cd hello
@@ -106,8 +106,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-org55ae6ba">
-<h3 id="org55ae6ba">Cargo generates a test for a library</h3>
+<section id="slide-org80d7935">
+<h3 id="org80d7935">Cargo generates a test for a library</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo new adder --lib
@@ -117,8 +117,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-org8f31879">
-<h3 id="org8f31879"><code>adder/src/lib.rs</code></h3>
+<section id="slide-orga82c858">
+<h3 id="orga82c858"><code>adder/src/lib.rs</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">add</span><span style="color: #ffffff;">(</span><span style="color: #00d3d0;">left</span>: <span style="color: #6ae4b9;">usize</span>, <span style="color: #00d3d0;">right</span>: <span style="color: #6ae4b9;">usize</span><span style="color: #ffffff;">)</span> -&gt; <span style="color: #6ae4b9;">usize</span> <span style="color: #ffffff;">{</span>
@@ -139,8 +139,8 @@ Hello, world!
 </div>
 
 </section>
-<section id="slide-orgc2ae593">
-<h3 id="orgc2ae593"><code>cargo test</code></h3>
+<section id="slide-org91bf5c3">
+<h3 id="org91bf5c3"><code>cargo test</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cd adder
@@ -163,8 +163,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgd493b73">
-<h3 id="orgd493b73">Macros</h3>
+<section id="slide-orgf735efc">
+<h3 id="orgf735efc">Macros</h3>
 <ul>
 <li class="fragment appear"><code>#[test]</code>, <code>#[cfg(test)]</code></li>
 <li class="fragment appear"><code>assert!</code>, <code>assert_eq!</code>, &amp;c.</li>
@@ -173,22 +173,22 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org56bda1b">
-<h3 id="org56bda1b">Rust 1.78 stabilized <a href="https://blog.rust-lang.org/2024/05/02/Rust-1.78.0.html#diagnostic-attributes">diagnostic attributes</a></h3>
+<section id="slide-org282df87">
+<h3 id="org282df87">Rust 1.78 stabilized <a href="https://blog.rust-lang.org/2024/05/02/Rust-1.78.0.html#diagnostic-attributes">diagnostic attributes</a></h3>
 <p>
 <code>#[diagnostic]</code>
 </p>
 
 </section>
-<section id="slide-org8e7025d">
-<h3 id="org8e7025d">Unstable Rust has a <a href="https://doc.rust-lang.org/nightly/unstable-book/library-features/test.html">bench attribute</a></h3>
+<section id="slide-org1c46c44">
+<h3 id="org1c46c44">Unstable Rust has a <a href="https://doc.rust-lang.org/nightly/unstable-book/library-features/test.html">bench attribute</a></h3>
 <p>
 <code>#[bench]</code>
 </p>
 
 </section>
-<section id="slide-org721aa68">
-<h3 id="org721aa68"><a href="https://exercism.org/">exercism.org</a></h3>
+<section id="slide-org7ef7cc4">
+<h3 id="org7ef7cc4"><a href="https://exercism.org/">exercism.org</a></h3>
 <ul>
 <li>Programming exercises</li>
 <li>Test-based</li>
@@ -200,13 +200,17 @@ running 0 tests
 </section>
 </section>
 <section>
-<section id="slide-org7f08c12">
-<h2 id="org7f08c12"><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></h2>
-<div class="outline-text-2" id="text-org7f08c12">
+<section id="slide-orgbee35f2">
+<h2 id="orgbee35f2"><a href="https://rust-for-rustaceans.com/">Rust for Rustaceans</a></h2>
+
+<div id="org58d92f6" class="figure">
+<p><img src="./towards-impeccable-rust.png" alt="towards-impeccable-rust.png" />
+</p>
 </div>
+
 </section>
-<section id="slide-org8a1d21d">
-<h3 id="org8a1d21d">6. Testing</h3>
+<section id="slide-org6175ed5">
+<h3 id="org6175ed5">6. Testing</h3>
 <ul>
 <li>Rust Testing Mechanisms</li>
 <li>Additional Testing Tools</li>
@@ -215,8 +219,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orga463a51">
-<h3 id="orga463a51">Rust Testing Mechanisms</h3>
+<section id="slide-orgda43b93">
+<h3 id="orgda43b93">Rust Testing Mechanisms</h3>
 <ul>
 <li>The Test Harness</li>
 <li><code>#[cfg(test)]</code></li>
@@ -227,8 +231,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org53d45b8">
-<h3 id="org53d45b8">Additional Testing Tools</h3>
+<section id="slide-orgf8bb3a6">
+<h3 id="orgf8bb3a6">Additional Testing Tools</h3>
 <ul>
 <li>Linting</li>
 <li>Test Generation
@@ -249,23 +253,23 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org219b5dd">
-<h3 id="org219b5dd">Summary</h3>
+<section id="slide-orgd3f0393">
+<h3 id="orgd3f0393">Summary</h3>
 
 </section>
 </section>
 <section>
-<section id="slide-org35530a0">
-<h2 id="org35530a0">Rust Testing Mechanisms</h2>
-<div class="outline-text-2" id="text-org35530a0">
+<section id="slide-org97d9f48">
+<h2 id="org97d9f48">Rust Testing Mechanisms</h2>
+<div class="outline-text-2" id="text-org97d9f48">
 </div>
 </section>
-<section id="slide-orgc4d21d6">
-<h3 id="orgc4d21d6">The Test Harness</h3>
+<section id="slide-org699e524">
+<h3 id="org699e524">The Test Harness</h3>
 
 </section>
-<section id="slide-org6f934ea">
-<h3 id="org6f934ea">look at adder again</h3>
+<section id="slide-org5f57167">
+<h3 id="org5f57167">look at adder again</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">add</span><span style="color: #ffffff;">(</span><span style="color: #00d3d0;">left</span>: <span style="color: #6ae4b9;">usize</span>, <span style="color: #00d3d0;">right</span>: <span style="color: #6ae4b9;">usize</span><span style="color: #ffffff;">)</span> -&gt; <span style="color: #6ae4b9;">usize</span> <span style="color: #ffffff;">{</span>
@@ -286,8 +290,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org89ade60">
-<h3 id="org89ade60"><code>cargo expand</code></h3>
+<section id="slide-org599804c">
+<h3 id="org599804c"><code>cargo expand</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#!</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">feature</span><span style="color: #ff62d4;">(</span><span style="color: #ff9077;">prelude_import</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">]</span>
@@ -302,8 +306,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org4463a48">
-<h3 id="org4463a48"><code>cargo expand --lib --tests</code></h3>
+<section id="slide-orgbd196ca">
+<h3 id="orgbd196ca"><code>cargo expand --lib --tests</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#!</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">feature</span><span style="color: #ff62d4;">(</span><span style="color: #ff9077;">prelude_import</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">]</span>
@@ -367,8 +371,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgdbe1925">
-<h3 id="orgdbe1925">The Test Harness</h3>
+<section id="slide-org15e6bbf">
+<h3 id="org15e6bbf">The Test Harness</h3>
 <ul>
 <li>the default test harness (libtest)</li>
 <li>can write our own test harness</li>
@@ -376,8 +380,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org4e60465">
-<h3 id="org4e60465">in Cargo.toml</h3>
+<section id="slide-orgfedb6ca">
+<h3 id="orgfedb6ca">in Cargo.toml</h3>
 <div class="org-src-container">
 
 <pre  class="src src-toml"   ><code trim>[[<span style="color: #6ae4b9;">test</span>]]
@@ -388,8 +392,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgefaba82">
-<h3 id="orgefaba82">Arguments to the default test harness</h3>
+<section id="slide-org925f087">
+<h3 id="org925f087">Arguments to the default test harness</h3>
 <ul>
 <li><code>--help</code></li>
 <li><code>--nocapture</code></li>
@@ -399,8 +403,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgcf72f28">
-<h3 id="orgcf72f28">Why use a custom (or no) test harness</h3>
+<section id="slide-orgb3268f8">
+<h3 id="orgb3268f8">Why use a custom (or no) test harness</h3>
 <ul>
 <li>benchmarks</li>
 <li>fuzzers</li>
@@ -410,8 +414,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgedd22ff">
-<h3 id="orgedd22ff"><code>#[cfg(test)]</code></h3>
+<section id="slide-org6c5c511">
+<h3 id="org6c5c511"><code>#[cfg(test)]</code></h3>
 <ul>
 <li>compilation context</li>
 <li>Caira mentioned last time in Chapter 5</li>
@@ -421,8 +425,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org343e1a5">
-<h3 id="org343e1a5">Mocking</h3>
+<section id="slide-org82868db">
+<h3 id="org82868db">Mocking</h3>
 <ul>
 <li>mocks and fakes
 <ul>
@@ -441,8 +445,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org802cc79">
-<h3 id="org802cc79"><a href="https://www.youtube.com/watch?v=B81U7Vunhuc">Mocking</a></h3>
+<section id="slide-org4e61104">
+<h3 id="org4e61104"><a href="https://www.youtube.com/watch?v=B81U7Vunhuc">Mocking</a></h3>
 <ul>
 <li>no standard approach yet</li>
 <li><a href="https://crates.io/crates/mockall">mockall</a> crate</li>
@@ -450,16 +454,16 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org9fbfc7d">
-<h3 id="org9fbfc7d">Test-Only APIs</h3>
+<section id="slide-org1c35ff9">
+<h3 id="org1c35ff9">Test-Only APIs</h3>
 <ul>
 <li>First, code that's only for testing</li>
 
 </ul>
 
 </section>
-<section id="slide-org9c4e374">
-<h3 id="org9c4e374">testing the hashbrown crate</h3>
+<section id="slide-org4046a13">
+<h3 id="org4046a13">testing the hashbrown crate</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
@@ -473,8 +477,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org5c65156">
-<h3 id="org5c65156">Private fields</h3>
+<section id="slide-orga385160">
+<h3 id="orga385160">Private fields</h3>
 <ul>
 <li>We are testing in <code>HashMap</code></li>
 <li>So we can see <code>m.table</code> even though it's private</li>
@@ -484,8 +488,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-org22ef14c">
-<h3 id="org22ef14c">Create an accessor just for testing</h3>
+<section id="slide-orge6d8037">
+<h3 id="orge6d8037">Create an accessor just for testing</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">impl</span> <span style="color: #6ae4b9;">RawTable</span> <span style="color: #ffffff;">{</span>
@@ -498,8 +502,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org56e928b">
-<h3 id="org56e928b">Change test to call method</h3>
+<section id="slide-org17c2475">
+<h3 id="org17c2475">Change test to call method</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
@@ -513,16 +517,16 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgb4a8942">
-<h3 id="orgb4a8942">Bookkeeping for Test Assertions</h3>
+<section id="slide-orge2d14fb">
+<h3 id="orge2d14fb">Bookkeeping for Test Assertions</h3>
 <ul>
 <li>Second, data that's only for testing</li>
 
 </ul>
 
 </section>
-<section id="slide-org7e428c9">
-<h3 id="org7e428c9">keep track of writes</h3>
+<section id="slide-org5fe4ab6">
+<h3 id="org5fe4ab6">keep track of writes</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">BufWriter</span><span style="color: #ffffff;">&lt;</span><span style="color: #6ae4b9;">T</span><span style="color: #ffffff;">&gt;</span> <span style="color: #ffffff;">{</span>
@@ -534,8 +538,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgaa22e26">
-<h3 id="orgaa22e26">keep track of writes</h3>
+<section id="slide-org756b6c6">
+<h3 id="org756b6c6">keep track of writes</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">struct</span> <span style="color: #6ae4b9;">BufWriter</span><span style="color: #ffffff;">&lt;</span><span style="color: #6ae4b9;">T</span><span style="color: #ffffff;">&gt;</span> <span style="color: #ffffff;">{</span>
@@ -558,12 +562,12 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgaf72986">
-<h3 id="orgaf72986">Doctests</h3>
+<section id="slide-orgcf8720b">
+<h3 id="orgcf8720b">Doctests</h3>
 
 </section>
-<section id="slide-org51fb1b6">
-<h3 id="org51fb1b6">Docstring for function</h3>
+<section id="slide-org5d1eab0">
+<h3 id="org5d1eab0">Docstring for function</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Completely frobnifies a number through I/O.</span>
@@ -579,8 +583,8 @@ running 0 tests
 
 
 </section>
-<section id="slide-org5cc8ad6">
-<h3 id="org5cc8ad6">Add code in triple backticks</h3>
+<section id="slide-org6e3345e">
+<h3 id="org6e3345e">Add code in triple backticks</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Completely frobnifies a number through I/O.</span>
@@ -602,8 +606,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org758120b">
-<h3 id="org758120b">Everything in backticks is Rust code</h3>
+<section id="slide-org148fcfd">
+<h3 id="org148fcfd">Everything in backticks is Rust code</h3>
 <ul>
 <li>automatically run as doctests</li>
 <li>integration tests
@@ -621,8 +625,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgab103df">
-<h3 id="orgab103df">Must use the function you're testing</h3>
+<section id="slide-org9c5db5f">
+<h3 id="org9c5db5f">Must use the function you're testing</h3>
 <ul>
 <li>Can hide code with #</li>
 <li><code>/// # use mylib::frobnify;</code></li>
@@ -630,8 +634,8 @@ running 0 tests
 </ul>
 
 </section>
-<section id="slide-orgbdca96f">
-<h3 id="orgbdca96f">Results</h3>
+<section id="slide-org4f37f6e">
+<h3 id="org4f37f6e">Results</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// Here's an example that uses ? on multiple types</span>
@@ -648,8 +652,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-orgf913cdd">
-<h3 id="orgf913cdd">This example depends on <code>anyhow</code></h3>
+<section id="slide-org3370620">
+<h3 id="org3370620">This example depends on <code>anyhow</code></h3>
 <ul>
 <li>Cargo.toml</li>
 
@@ -662,8 +666,8 @@ running 0 tests
 </div>
 
 </section>
-<section id="slide-org013bb8b">
-<h3 id="org013bb8b">Block comments</h3>
+<section id="slide-org2647a98">
+<h3 id="org2647a98">Block comments</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b0d6f5;">/// You could even replace an entire block of code completely,</span>
@@ -674,15 +678,15 @@ running 0 tests
 <span style="color: #b0d6f5;">/// let i = ...;</span>
 <span style="color: #b0d6f5;">/// # */</span>
 <span style="color: #b0d6f5;">/// # let i = 42;</span>
-<span style="color: #b0d6f5;">/// frobnify(0)?;</span>
+<span style="color: #b0d6f5;">/// frobnify(i)?;</span>
 <span style="color: #b0d6f5;">/// # Ok::&lt;(), anyhow::Error&gt;(())</span>
 <span style="color: #b0d6f5;">/// ```</span>
 </code></pre>
 </div>
 
 </section>
-<section id="slide-org1c54a4f">
-<h3 id="org1c54a4f">Irony!</h3>
+<section id="slide-org04db9b9">
+<h3 id="org04db9b9">Irony!</h3>
 <blockquote >
 <p>
 NOTE: Use this feature with care; it can be frustrating to users if they copy-paste an example and then it doesn't work because of required steps that you've hidden.
@@ -690,8 +694,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </blockquote>
 
 </section>
-<section id="slide-orgdc93adc">
-<h3 id="orgdc93adc">Attributes</h3>
+<section id="slide-orgc160c96">
+<h3 id="orgc160c96">Attributes</h3>
 <ul>
 <li><code>should_panic</code>, <code>ignore</code>, <code>no_run</code></li>
 <li>This code should fail to compile</li>
@@ -710,13 +714,13 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </section>
 </section>
 <section>
-<section id="slide-org73f488f">
-<h2 id="org73f488f">Additional Testing Tools</h2>
-<div class="outline-text-2" id="text-org73f488f">
+<section id="slide-orgb154e84">
+<h2 id="orgb154e84">Additional Testing Tools</h2>
+<div class="outline-text-2" id="text-orgb154e84">
 </div>
 </section>
-<section id="slide-org3e5968f">
-<h3 id="org3e5968f">Linting</h3>
+<section id="slide-orgb42f896">
+<h3 id="orgb42f896">Linting</h3>
 <ul>
 <li>clippy
 <ul>
@@ -734,8 +738,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 
 </ul>
 </section>
-<section id="slide-org030ef14">
-<h3 id="org030ef14">rustc warnings</h3>
+<section id="slide-orgfb1f5e1">
+<h3 id="orgfb1f5e1">rustc warnings</h3>
 <ul>
 <li>Not all are on by default!</li>
 <li><code>rust_2018_idioms</code></li>
@@ -753,8 +757,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orgef3d05b">
-<h3 id="orgef3d05b">rustc warnings</h3>
+<section id="slide-orgbeb5772">
+<h3 id="orgbeb5772">rustc warnings</h3>
 <ul>
 <li>enable warning
 <ul>
@@ -770,10 +774,15 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orgb8dfea5">
-<h3 id="orgb8dfea5">Test Generation</h3>
+<section id="slide-org6d06ded">
+<h3 id="org6d06ded">Test Generation</h3>
 <ul>
-<li>Fuzzing</li>
+<li>Fuzzing
+<ul>
+<li><a href="https://rust-fuzz.github.io/book/cargo-fuzz.html">cargo-fuzz</a></li>
+<li><a href="https://github.com/rust-fuzz/libfuzzer">libfuzzer-sys</a> (LLVM's libFuzzer)</li>
+
+</ul></li>
 <li>Property-Based Testing
 <ul>
 <li><a href="https://proptest-rs.github.io/proptest/proptest/index.html">proptest</a></li>
@@ -784,28 +793,28 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orge7aefff">
-<h3 id="orge7aefff"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
+<section id="slide-orgc127d71">
+<h3 id="orgc127d71"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
 
-<div id="org22cf413" class="figure">
+<div id="org3c9fe50" class="figure">
 <p><img src="./claessen-hughes.jpg" alt="claessen-hughes.jpg" />
 </p>
 </div>
 
 </section>
-<section id="slide-orgc8ddb2a">
-<h3 id="orgc8ddb2a"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
+<section id="slide-org22617aa">
+<h3 id="org22617aa"><a href="https://www.cse.chalmers.se/~rjmh/QuickCheck/">QuickCheck</a></h3>
 <ul>
-<li>originated in Haskell in 1999</li>
 <li>by <a href="https://www.cse.chalmers.se/~koen/">Koen Claessen</a> and <a href="https://www.cse.chalmers.se/~rjmh/">John Hughes</a></li>
+<li>originated in Haskell in 1999</li>
 <li>John Hughes <a href="https://www.youtube.com/results?search_query=john+hughes+quickcheck">talks on quickcheck</a></li>
-<li>shrinking</li>
+<li>shrinking!</li>
 
 </ul>
 
 </section>
-<section id="slide-orga175501">
-<h3 id="orga175501"><a href="https://ericnormand.me/issues/purelyfunctional-tv-newsletter-459-revisiting-the-open-closed-principle">Paul Cipher</a></h3>
+<section id="slide-orgaaf1115">
+<h3 id="orgaaf1115"><a href="https://ericnormand.me/issues/purelyfunctional-tv-newsletter-459-revisiting-the-open-closed-principle">Paul Cipher</a></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">use</span> <span style="color: #00bcff;">proptest</span>::<span style="color: #00bcff;">prelude</span>::*;
@@ -820,8 +829,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-org97ea7b1">
-<h3 id="org97ea7b1">proptest =&gt; unit test</h3>
+<section id="slide-orgf8391f7">
+<h3 id="orgf8391f7">proptest =&gt; unit test</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #ff9077;">#</span><span style="color: #ffffff;">[</span><span style="color: #ff9077;">test</span><span style="color: #ffffff;">]</span>
@@ -839,8 +848,41 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-orge6d51dc">
-<h3 id="orge6d51dc">Test Augmentation</h3>
+<section id="slide-org1b8b090">
+<h3 id="org1b8b090">fuzzing =~ property-based testing</h3>
+<blockquote >
+<p>
+If this approach of generating inputs until some condition is met sounds a lot like fuzzing, that's because it is&#x2014; smarter people than I have argued that fuzzing is "just" property-based testing where the property you're testing for is "it doesn't crash."
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org463037c">
+<h3 id="org463037c">Testing Sequences of Operations</h3>
+<ul>
+<li>not limited to a single function call</li>
+<li>can test, say, a whole <code>Vec&lt;Operation&gt;</code></li>
+<li>minimizers can still find the smallest sequence</li>
+
+</ul>
+
+</section>
+<section id="slide-orged1996a">
+<h3 id="orged1996a">Test Augmentation</h3>
+<ul>
+<li>difficult to test for rare failures
+<ul>
+<li>only if on different threads</li>
+<li>UB in <code>unsafe</code> code</li>
+
+</ul></li>
+<li>could try repeating test</li>
+
+</ul>
+
+</section>
+<section id="slide-orgd9ec5c7">
+<h3 id="orgd9ec5c7">Test Augmentation</h3>
 <ul>
 <li><a href="https://github.com/rust-lang/miri">Miri</a>
 <ul>
@@ -856,8 +898,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orgffd9084">
-<h3 id="orgffd9084">Miri</h3>
+<section id="slide-org9d9eaa4">
+<h3 id="org9d9eaa4">Miri</h3>
 <ul>
 <li>rustup +nightly component add miri</li>
 <li>cargo +nightly miri test</li>
@@ -866,8 +908,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </ul>
 
 </section>
-<section id="slide-orgfa647e8">
-<h3 id="orgfa647e8">Miri</h3>
+<section id="slide-orgec48f40">
+<h3 id="orgec48f40">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">main</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -880,8 +922,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-orgde9e908">
-<h3 id="orgde9e908">Miri</h3>
+<section id="slide-orgf502f86">
+<h3 id="orgf502f86">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo +nightly run
@@ -893,8 +935,8 @@ NOTE: Use this feature with care; it can be frustrating to users if they copy-pa
 </div>
 
 </section>
-<section id="slide-org071519c">
-<h3 id="org071519c">Miri</h3>
+<section id="slide-orgbb80b31">
+<h3 id="orgbb80b31">Miri</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"   ><code trim>&#10095; cargo +nightly miri run
@@ -999,8 +1041,8 @@ error: aborting due to 1 previous error
 </div>
 
 </section>
-<section id="slide-orga6b1966">
-<h3 id="orga6b1966">Performance Testing</h3>
+<section id="slide-org92fee85">
+<h3 id="org92fee85">Performance Testing</h3>
 <ul>
 <li>Performance Variance</li>
 <li>Compiler Optimizations</li>
@@ -1009,8 +1051,8 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-orge99eb0b">
-<h3 id="orge99eb0b">Performance Variance</h3>
+<section id="slide-org287a015">
+<h3 id="org287a015">Performance Variance</h3>
 <ul>
 <li><a href="https://docs.rs/hdrhistogram/latest/hdrhistogram/">hdrhistogram</a> (high dynamic range histogram)
 <ul>
@@ -1027,8 +1069,8 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-org4656cde">
-<h3 id="org4656cde">Compiler Optimizations</h3>
+<section id="slide-org4cd2088">
+<h3 id="org4cd2088">Compiler Optimizations</h3>
 <ul>
 <li class="fragment appear"><a href="https://godbolt.org/">godbolt.org</a> ("Compiler Explorer")</li>
 <li class="fragment appear"><del>cargo-asm</del> <a href="https://docs.rs/cargo-show-asm/latest/cargo_show_asm/">cargo-show-asm</a>
@@ -1045,15 +1087,15 @@ error: aborting due to 1 previous error
 </ul>
 
 </section>
-<section id="slide-org879abad">
-<h3 id="org879abad">cargo-show-asm</h3>
+<section id="slide-orga61749f">
+<h3 id="orga61749f">cargo-show-asm</h3>
 <p>
 cargo install cargo-show-asm
 </p>
 
 </section>
-<section id="slide-orgeea54af">
-<h3 id="orgeea54af">cargo-show-asm</h3>
+<section id="slide-org8310839">
+<h3 id="org8310839">cargo-show-asm</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">pub</span> <span style="color: #b6a0ff;">fn</span> <span style="color: #feacd0;">vec_push</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
@@ -1068,8 +1110,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-orgad1d4d0">
-<h3 id="orgad1d4d0">cargo-show-asm</h3>
+<section id="slide-orgf8b2919">
+<h3 id="orgf8b2919">cargo-show-asm</h3>
 <p>
 <code>cargo asm vec_push</code>
 </p>
@@ -1130,8 +1172,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-orgdd845b9">
-<h3 id="orgdd845b9"><code>black_box</code></h3>
+<section id="slide-org6019997">
+<h3 id="org6019997"><code>black_box</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">use</span> <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">hint</span>::black_box;
@@ -1149,8 +1191,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-org404dc69">
-<h3 id="org404dc69"><code>black_box</code> asm</h3>
+<section id="slide-orgc0deefe">
+<h3 id="orgc0deefe"><code>black_box</code> asm</h3>
 <div class="org-src-container">
 
 <pre  class="src src-asm"   ><code trim><span style="color: #b6a0ff;">.section</span> .text.mylib::vec_push,<span style="color: #79a8ff;">"ax"</span>,@progbits
@@ -1272,8 +1314,8 @@ cargo install cargo-show-asm
 </div>
 
 </section>
-<section id="slide-org2ef1823">
-<h3 id="org2ef1823">I/O Overhead Measurement</h3>
+<section id="slide-orgeddee2c">
+<h3 id="orgeddee2c">I/O Overhead Measurement</h3>
 <div class="org-src-container">
 
 <pre  class="src src-rust"   ><code trim><span style="color: #b6a0ff;">let</span> <span style="color: #00d3d0;">start</span> = <span style="color: #00bcff;">std</span>::<span style="color: #00bcff;">time</span>::<span style="color: #6ae4b9;">Instant</span>::now<span style="color: #ffffff;">()</span>;
@@ -1288,8 +1330,8 @@ cargo install cargo-show-asm
 </section>
 </section>
 <section>
-<section id="slide-org2b11f6a">
-<h2 id="org2b11f6a">Summary</h2>
+<section id="slide-orgf1a35ce">
+<h2 id="orgf1a35ce">Summary</h2>
 <ul>
 <li>Rust's built-in testing capabilities</li>
 <li>Testing facilities and techniques</li>
@@ -1301,10 +1343,10 @@ cargo install cargo-show-asm
 </section>
 </section>
 <section>
-<section id="slide-org63d330b">
-<h2 id="org63d330b">Thanks!</h2>
+<section id="slide-orgf22a80b">
+<h2 id="orgf22a80b">Thanks!</h2>
 
-<div id="org762cc05" class="figure">
+<div id="orgb4df81c" class="figure">
 <p><img src="./tim.png" alt="tim.png" />
 </p>
 </div>
@@ -1321,6 +1363,7 @@ cargo install cargo-show-asm
 <script src="../plugin/markdown/markdown.js"></script>
 <script src="../plugin/zoom/zoom.js"></script>
 <script src="../plugin/notes/notes.js"></script>
+
 
 <script>
 // Full list of configuration options available here:
